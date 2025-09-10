@@ -1,4 +1,4 @@
-package com.example.onlineshop;
+package com.example.onlineshop.classes;
 
 import java.util.Date;
 

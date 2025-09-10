@@ -1,4 +1,4 @@
-package com.example.onlineshop;
+package com.example.onlineshop.classes;
 
 public class Address {
     private String StreetName;
