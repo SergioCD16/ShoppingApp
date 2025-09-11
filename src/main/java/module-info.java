@@ -1,7 +1,16 @@
-module com.example.onlineshop {
+module com.example.shoppingapp {
     requires javafx.controls;
     requires javafx.fxml;
+    requires javafx.web;
 
-    opens com.example.onlineshop to javafx.fxml;
-    exports com.example.onlineshop;
+    requires org.controlsfx.controls;
+    requires com.dlsc.formsfx;
+    requires net.synedra.validatorfx;
+    requires org.kordamp.ikonli.javafx;
+    requires org.kordamp.bootstrapfx.core;
+    requires eu.hansolo.tilesfx;
+    requires com.almasb.fxgl.all;
+
+    opens com.example.shoppingapp to javafx.fxml;
+    exports com.example.shoppingapp;
 }
