@@ -3,6 +3,8 @@ package com.example.shoppingapp.classes;
 import java.util.regex.*;
 
 public class CheckInput {
+    // checkear formato de la fecha
+
     /**
      * Checks an Email to have the correct format
      **/

@@ -34,4 +34,10 @@ public class Main extends Application {
 
         // DatabaseConnection();
     }
+
+    /* TODO
+    * - hacer ventanas admin
+    * - añadir control de entradas al registrar
+    * - añadir registro por usuario individual y por usuario empresa
+    */
 }

@@ -52,23 +52,23 @@
       </Pane>
       <Pane prefHeight="341.0" prefWidth="600.0" style="-fx-background-color: #212121;">
          <children>
-            <TextField layoutX="33.0" layoutY="38.0" />
-            <TextField layoutX="226.0" layoutY="38.0" prefHeight="25.0" prefWidth="221.0" />
-            <TextField layoutX="490.0" layoutY="38.0" />
-            <TextField layoutX="33.0" layoutY="99.0" prefHeight="25.0" prefWidth="174.0" />
-            <TextField layoutX="33.0" layoutY="155.0" prefHeight="25.0" prefWidth="161.0" />
-            <TextField layoutX="235.0" layoutY="155.0" prefHeight="25.0" prefWidth="62.0" />
-            <TextField layoutX="335.0" layoutY="155.0" prefHeight="25.0" prefWidth="92.0" />
-            <TextField layoutX="473.0" layoutY="155.0" prefHeight="25.0" prefWidth="167.0" />
-            <TextField layoutX="33.0" layoutY="209.0" prefHeight="25.0" prefWidth="197.0" />
-            <TextField layoutX="261.0" layoutY="209.0" prefHeight="25.0" prefWidth="214.0" />
-            <TextField layoutX="517.0" layoutY="209.0" prefHeight="25.0" prefWidth="123.0" />
+            <TextField fx:id="usernameField" layoutX="33.0" layoutY="38.0" />
+            <TextField fx:id="emailField" layoutX="226.0" layoutY="38.0" prefHeight="25.0" prefWidth="221.0" />
+            <TextField fx:id="DNIField" layoutX="490.0" layoutY="38.0" />
+            <TextField fx:id="phoneField" layoutX="33.0" layoutY="99.0" prefHeight="25.0" prefWidth="174.0" />
+            <TextField fx:id="streetNameField" layoutX="33.0" layoutY="155.0" prefHeight="25.0" prefWidth="161.0" />
+            <TextField fx:id="numberField" layoutX="235.0" layoutY="155.0" prefHeight="25.0" prefWidth="62.0" />
+            <TextField fx:id="zipCodeField" layoutX="335.0" layoutY="155.0" prefHeight="25.0" prefWidth="92.0" />
+            <TextField fx:id="cityField" layoutX="473.0" layoutY="155.0" prefHeight="25.0" prefWidth="167.0" />
+            <TextField fx:id="creditCardField" layoutX="33.0" layoutY="209.0" prefHeight="25.0" prefWidth="184.0" />
+            <TextField fx:id="fullNameField" layoutX="241.0" layoutY="209.0" prefHeight="25.0" prefWidth="167.0" />
+            <TextField fx:id="expirationDateField" layoutX="534.0" layoutY="209.0" prefHeight="25.0" prefWidth="106.0" />
             <Button fx:id="loginButton" layoutX="33.0" layoutY="265.0" mnemonicParsing="false" onAction="#goToLogin" text="Go back">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
             </Button>
-            <Button layoutX="582.0" layoutY="265.0" mnemonicParsing="false" text="Accept">
+            <Button fx:id="acceptRegisterButton" layoutX="582.0" layoutY="265.0" mnemonicParsing="false" onAction="#registerUser" text="Accept">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
@@ -128,18 +128,24 @@
                   <Font name="System Bold" size="12.0" />
                </font>
             </Label>
-            <Label layoutX="260.0" layoutY="192.0" text="Full Name:" textFill="WHITE">
+            <Label layoutX="241.0" layoutY="192.0" text="Full Name:" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
             </Label>
-            <Label layoutX="519.0" layoutY="192.0" text="Expiration Date:" textFill="WHITE">
+            <Label layoutX="533.0" layoutY="192.0" text="Expiration Date:" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
             </Label>
-            <PasswordField layoutX="260.0" layoutY="99.0" prefHeight="25.0" prefWidth="167.0" />
-            <PasswordField layoutX="473.0" layoutY="99.0" prefWidth="167.0" />
+            <PasswordField fx:id="passwordField" layoutX="260.0" layoutY="99.0" prefHeight="25.0" prefWidth="167.0" />
+            <PasswordField fx:id="cPasswordField" layoutX="473.0" layoutY="99.0" prefWidth="167.0" />
+            <TextField fx:id="CVVField" layoutX="436.0" layoutY="209.0" prefHeight="25.0" prefWidth="74.0" />
+            <Label layoutX="436.0" layoutY="192.0" text="CVV:" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Label>
          </children>
       </Pane>
    </children>

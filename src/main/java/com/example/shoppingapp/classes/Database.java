@@ -17,7 +17,7 @@ public class Database {
         return DriverManager.getConnection(URL, USER, PASSWORD);
     }
 
-    public void addUser(User user, Address address, CreditCard creditCard) throws SQLException, ClassNotFoundException {
+    public static void addUser(User user, Address address, CreditCard creditCard) throws SQLException, ClassNotFoundException {
         try (Connection conn = Database.getConnection()) {
 
             String userSql = "INSERT INTO User (Name, Email, Password, PhoneNumber, Type) VALUES (?, ?, ?, ?, ?)";
