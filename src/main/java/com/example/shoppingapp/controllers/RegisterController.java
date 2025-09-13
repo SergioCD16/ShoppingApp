@@ -1,4 +1,4 @@
-package com.example.shoppingapp;
+package com.example.shoppingapp.controllers;
 
 import javafx.scene.control.Button;
 import javafx.event.ActionEvent;
@@ -10,14 +10,14 @@ import javafx.stage.Stage;
 import javafx.scene.Node;
 import javafx.fxml.FXML;
 
-public class LoginController {
+public class RegisterController {
     @FXML
-    private Button registerButton;
+    private Button loginButton;
 
     @FXML
-    void goToRegister(ActionEvent event) throws IOException {
+    void goToLogin(ActionEvent event) throws IOException {
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        Parent root = FXMLLoader.load(getClass().getResource("/com/example/shoppingapp/register.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/com/example/shoppingapp/login.fxml"));
         stage.setTitle("Produtem");
         stage.setScene(new Scene(root));
         stage.show();

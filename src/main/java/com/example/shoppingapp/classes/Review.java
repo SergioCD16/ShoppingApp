@@ -1,4 +1,4 @@
-package com.example.shoppingapp;
+package com.example.shoppingapp.classes;
 
 import java.time.LocalDateTime;
 

@@ -1,14 +1,26 @@
 package com.example.shoppingapp;
 
+import com.example.shoppingapp.classes.Database;
 import javafx.application.Application;
 import javafx.scene.image.Image;
 import javafx.fxml.FXMLLoader;
+import java.io.IOException;
+import java.sql.Connection;
+import java.sql.SQLException;
+
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-import java.io.IOException;
-
 public class Main extends Application {
+
+//    private void DatabaseConnection() {
+//        try {
+//            Connection conn = Database.getConnection();
+//            System.out.println("Conexion exitosa a MySQL");
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+//    }
 
     @Override
     public void start(Stage stage) throws IOException {
@@ -18,7 +30,8 @@ public class Main extends Application {
         stage.setScene(scene);
 
         stage.getIcons().add(new Image(getClass().getResource("/logo/produtem_4.png").toExternalForm()));
-
         stage.show();
+
+        // DatabaseConnection();
     }
 }

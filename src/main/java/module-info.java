@@ -2,6 +2,7 @@ module com.example.shoppingapp {
     requires javafx.controls;
     requires javafx.fxml;
     requires javafx.web;
+    requires java.sql;
 
     requires org.controlsfx.controls;
     requires com.dlsc.formsfx;
@@ -11,6 +12,6 @@ module com.example.shoppingapp {
     requires eu.hansolo.tilesfx;
     requires com.almasb.fxgl.all;
 
-    opens com.example.shoppingapp to javafx.fxml;
+    opens com.example.shoppingapp.controllers to javafx.fxml;
     exports com.example.shoppingapp;
 }

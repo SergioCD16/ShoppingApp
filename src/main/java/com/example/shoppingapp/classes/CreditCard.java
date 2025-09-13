@@ -1,4 +1,4 @@
-package com.example.onlineshop.classes;
+package com.example.shoppingapp.classes;
 
 import java.util.Date;
 
@@ -41,7 +41,7 @@ public class CreditCard {
     }
 
     public String toString() {
-        return ("Holder Name: " + (this.Name) + ", Number: " + (this.Number) + ", CVV: " + (this.CVV) +
-                ", Expiration Date: " + (this.ExpDate));
+        return ("Holder Name: " + (this.Name) + ", Number: " + (this.Number) +
+                ", CVV: " + (this.CVV) + ", Expiration Date: " + (this.ExpDate));
     }
 }

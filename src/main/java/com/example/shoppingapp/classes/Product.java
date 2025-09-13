@@ -1,4 +1,4 @@
-package com.example.shoppingapp;
+package com.example.shoppingapp.classes;
 
 import java.util.ArrayList;
 import java.time.LocalDateTime;
@@ -12,8 +12,6 @@ public class Product {
     private float Price;
     private int Stock;
     private LocalDateTime EntryDate;
-    private ArrayList<Review> Reviews;
-    private static ArrayList<Product> ProductList = new ArrayList<Product>();
 
     public Product(String title, String category, String description, String picture, float price, int stock) {
         this.Title = title;
@@ -23,7 +21,6 @@ public class Product {
         this.Price = price;
         this.Stock = stock;
         this.EntryDate = LocalDateTime.now();
-        Reviews = new ArrayList<>();
     }
 
     public String getTitle() {
@@ -44,14 +41,8 @@ public class Product {
     public int getStock() {
         return this.Stock;
     }
-    public ArrayList<Review> getReviews() {
-        return this.Reviews;
-    }
     public LocalDateTime getEntryDate() {
         return this.EntryDate;
-    }
-    public ArrayList<Product> getProductList() {
-        return ProductList;
     }
 
     public void setTitle(String title) {
@@ -72,9 +63,6 @@ public class Product {
     public void setStock(int stock) {
         this.Stock = stock;
     }
-    public void addReview(Review review) {
-        Reviews.add(review);
-    }
     public void setEntryDate(LocalDateTime entryDate) {
         this.EntryDate = entryDate;
     }
@@ -82,28 +70,28 @@ public class Product {
     public String toString() {
         return super.toString() + ("Title: " + (this.Title) +  ", Category: "
                 + (this.Category) + ", Description: " + (this.Description) + ", Price: " + (this.Price) + ", Stock: " +
-                (this.Stock) + ", Reviews: { " + (this.Reviews.toString()) + " }, Entry Date: { "
-                + (this.EntryDate.toString()) + " }");
+                (this.Stock) + ", Entry Date: { " + (this.EntryDate.toString()) + " }");
     }
 
     /**
      * Returns the mean value of a Product's Reviews
      **/
-    public static Float getReviewAverage(Product product) {
-        ArrayList<Review> ReviewList = product.getReviews();
-        Float sum = 0f, mean;
-        Review reviewi;
-        int marki;
-
-        if (ReviewList.isEmpty()) {
-            return 0f;
-        }
-        for (int i = 0; i <= ReviewList.size() - 1; i++) {
-            reviewi = ReviewList.get(i);
-            marki = reviewi.getMark();
-            sum += marki;
-        }
-        mean = sum/ReviewList.size();
-        return mean;
-    }
+    // Reescribir con MySQL
+//    public static Float getReviewAverage(Product product) {
+//        ArrayList<Review> ReviewList = product.getReviews();
+//        Float sum = 0f, mean;
+//        Review reviewi;
+//        int marki;
+//
+//        if (ReviewList.isEmpty()) {
+//            return 0f;
+//        }
+//        for (int i = 0; i <= ReviewList.size() - 1; i++) {
+//            reviewi = ReviewList.get(i);
+//            marki = reviewi.getMark();
+//            sum += marki;
+//        }
+//        mean = sum/ReviewList.size();
+//        return mean;
+//    }
 }

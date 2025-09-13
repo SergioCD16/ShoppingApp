@@ -1,4 +1,4 @@
-package com.example.shoppingapp;
+package com.example.shoppingapp.classes;
 
 import java.util.ArrayList;
 
@@ -6,8 +6,8 @@ public class BusinessUser extends User {
     private String CIF;
     public static ArrayList<BusinessUser> BusinessUserList = new ArrayList<BusinessUser>();
 
-    public BusinessUser(String name, String email, String password, String phoneNumber, Address address, CreditCard creditCard, String cif) {
-        super(name, email, password, phoneNumber, address, creditCard);
+    public BusinessUser(String name, String email, String password, String phoneNumber, String cif) {
+        super(name, email, password, phoneNumber);
         this.CIF = cif;
     }
 
