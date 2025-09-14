@@ -47,14 +47,14 @@
                   <Image url="@../../../logo/produtem_4.png" />
                </image>
             </ImageView>
-            <ChoiceBox layoutX="485.0" layoutY="29.0" prefWidth="150.0" />
+            <ChoiceBox fx:id="chooseUserType" layoutX="485.0" layoutY="29.0" prefWidth="150.0" />
          </children>
       </Pane>
       <Pane prefHeight="341.0" prefWidth="600.0" style="-fx-background-color: #212121;">
          <children>
             <TextField fx:id="usernameField" layoutX="33.0" layoutY="38.0" />
             <TextField fx:id="emailField" layoutX="226.0" layoutY="38.0" prefHeight="25.0" prefWidth="221.0" />
-            <TextField fx:id="DNIField" layoutX="490.0" layoutY="38.0" />
+            <TextField fx:id="DNICIFField" layoutX="490.0" layoutY="38.0" />
             <TextField fx:id="phoneField" layoutX="33.0" layoutY="99.0" prefHeight="25.0" prefWidth="174.0" />
             <TextField fx:id="streetNameField" layoutX="33.0" layoutY="155.0" prefHeight="25.0" prefWidth="161.0" />
             <TextField fx:id="numberField" layoutX="235.0" layoutY="155.0" prefHeight="25.0" prefWidth="62.0" />
@@ -83,7 +83,7 @@
                   <Font name="System Bold" size="12.0" />
                </font>
             </Label>
-            <Label layoutX="490.0" layoutY="21.0" text="DNI:" textFill="WHITE">
+            <Label fx:id="DNICIFLabel" layoutX="490.0" layoutY="21.0" text="DNI:" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
@@ -146,6 +146,7 @@
                   <Font name="System Bold" size="12.0" />
                </font>
             </Label>
+            <Label layoutX="549.0" layoutY="234.0" text="(dd-MM-yyyy)" textFill="WHITE" />
          </children>
       </Pane>
    </children>

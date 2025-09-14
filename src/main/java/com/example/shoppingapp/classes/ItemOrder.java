@@ -22,6 +22,7 @@ public class ItemOrder {
         this.Quantity = quantity;
     }
 
+    @Override
     public String toString() {
         return "Product: " + (this.Product) + ", Quantity: " + (this.Quantity);
     }

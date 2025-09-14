@@ -32,6 +32,7 @@ public class Review {
         this.Date = date;
     }
 
+    @Override
     public String toString() {
         return ("Mark: " + (this.Mark) + ", Message " + (this.Message) +
                 ", Date: " + (this.Date));

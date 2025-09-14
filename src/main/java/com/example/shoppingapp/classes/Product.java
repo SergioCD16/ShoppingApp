@@ -67,6 +67,7 @@ public class Product {
         this.EntryDate = entryDate;
     }
 
+    @Override
     public String toString() {
         return super.toString() + ("Title: " + (this.Title) +  ", Category: "
                 + (this.Category) + ", Description: " + (this.Description) + ", Price: " + (this.Price) + ", Stock: " +

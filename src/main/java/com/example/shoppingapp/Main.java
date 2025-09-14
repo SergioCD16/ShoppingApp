@@ -1,6 +1,6 @@
 package com.example.shoppingapp;
 
-import com.example.shoppingapp.classes.Database;
+import com.example.shoppingapp.utils.Database;
 import javafx.application.Application;
 import javafx.scene.image.Image;
 import javafx.fxml.FXMLLoader;
@@ -13,15 +13,6 @@ import javafx.stage.Stage;
 
 public class Main extends Application {
 
-//    private void DatabaseConnection() {
-//        try {
-//            Connection conn = Database.getConnection();
-//            System.out.println("Conexion exitosa a MySQL");
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
-//    }
-
     @Override
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("login.fxml"));
@@ -31,13 +22,16 @@ public class Main extends Application {
 
         stage.getIcons().add(new Image(getClass().getResource("/logo/produtem_4.png").toExternalForm()));
         stage.show();
-
-        // DatabaseConnection();
     }
 
     /* TODO
-    * - hacer ventanas admin
-    * - añadir control de entradas al registrar
-    * - añadir registro por usuario individual y por usuario empresa
+    * -- terminar registro
+    * -- hacer ventanas admin
+    * - limpiar codigo
+    * - mejorar clases y .java con sql
+    * - Hash password instead of String type
+    * - Change suggestions of code improvement
+    *
+    * - check previous program
     */
 }

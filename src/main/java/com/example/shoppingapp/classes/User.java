@@ -1,7 +1,5 @@
 package com.example.shoppingapp.classes;
 
-import java.util.Random;
-
 public class User {
     private String Name;
     private String Email;
@@ -48,6 +46,7 @@ public class User {
         this.UserID = userID;
     }
 
+    @Override
     public String toString() {
         return "Name :" + this.Name + ", Email: " + this.Email + ", Password: " + this.Password +
                 ", Phone Number: " + this.PhoneNumber + ", UserID: " + this.UserID;

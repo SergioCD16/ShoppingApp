@@ -1,21 +1,23 @@
 package com.example.shoppingapp.controllers;
 
 import com.example.shoppingapp.classes.*;
-
+import com.example.shoppingapp.utils.*;
+import java.text.SimpleDateFormat;
+import java.text.ParseException;
 import javafx.event.ActionEvent;
 import javafx.scene.control.*;
 import javafx.fxml.FXMLLoader;
-import java.io.IOException;
 import java.sql.SQLException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
+import java.io.IOException;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.scene.Node;
 import javafx.fxml.FXML;
+
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 
 public class RegisterController {
     @FXML
@@ -27,9 +29,13 @@ public class RegisterController {
     @FXML
     private TextField emailField;
     @FXML
-    private TextField DNIField;
+    private PasswordField passwordField;
+    @FXML
+    private PasswordField cPasswordField;
     @FXML
     private TextField phoneField;
+    @FXML
+    private TextField DNICIFField;
     @FXML
     private TextField streetNameField;
     @FXML
@@ -46,6 +52,24 @@ public class RegisterController {
     private TextField expirationDateField;
     @FXML
     private TextField CVVField;
+    @FXML
+    private ChoiceBox<String> chooseUserType;
+    @FXML
+    private Label DNICIFLabel;
+
+    @FXML
+    public void initialize() {
+        chooseUserType.getItems().addAll("Individual User", "Business User");
+        chooseUserType.setValue("Individual User"); // default option
+
+        chooseUserType.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue.equals("Individual User")) {
+                DNICIFLabel.setText("DNI: ");
+            } else {
+                DNICIFLabel.setText("CIF: ");
+            }
+        });
+    }
 
     @FXML
     void goToLogin(ActionEvent event) throws IOException {
@@ -59,18 +83,37 @@ public class RegisterController {
     @FXML
     void registerUser() {
         try {
-            SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
-            Date expDate = formatter.parse(expirationDateField.getText());
+            String selectedRole = chooseUserType.getValue();
 
-            CreditCard creditCard = new CreditCard(fullNameField.getText(), creditCardField.getText(), CVVField.getText(), expDate);
-            Address address = new Address(streetNameField.getText(), numberField.getText(), zipCodeField.getText(), cityField.getText());
-            User user = new User(usernameField.getText(), emailField.getText(), DNIField.getText(), phoneField.getText());
-            Database.addUser(user, address, creditCard);
+            // problema, si esta vacio da error, pero se comprueba despues
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+            LocalDate expDate = LocalDate.parse(expirationDateField.getText(), formatter);
 
-            System.out.println("Registro completado");
+            boolean checkResult;
+            if (selectedRole.equals("Individual User")) {
+                checkResult = CheckRegistration.checkCompleteRegistration(true, usernameField.getText(), emailField.getText(), DNICIFField.getText(), phoneField.getText(), passwordField.getText(), cPasswordField.getText(), streetNameField.getText(), numberField.getText(), zipCodeField.getText(), cityField.getText(), creditCardField.getText(), fullNameField.getText(), CVVField.getText(), expDate);
+            } else {
+                checkResult = CheckRegistration.checkCompleteRegistration(false, usernameField.getText(), emailField.getText(), DNICIFField.getText(), phoneField.getText(), passwordField.getText(), cPasswordField.getText(), streetNameField.getText(), numberField.getText(), zipCodeField.getText(), cityField.getText(), creditCardField.getText(), fullNameField.getText(), CVVField.getText(), expDate);
+            }
 
-        } catch (ParseException e) {
-            e.printStackTrace();
+            if (checkResult) {
+                String streetName = Address.capitalizeWords(streetNameField.getText());
+                String fullName = Address.capitalizeWords(fullNameField.getText());
+                String city = Address.capitalizeWords(cityField.getText());
+
+                CreditCard creditCard = new CreditCard(fullName, creditCardField.getText(), CVVField.getText(), expDate);
+                Address address = new Address(streetName, numberField.getText(), zipCodeField.getText(), city);
+                User user = new User(usernameField.getText(), emailField.getText(), passwordField.getText(), phoneField.getText());
+
+                if (selectedRole.equals("Individual User")) {
+                    IndividualUser indUser = new IndividualUser(user.getName(), user.getEmail(), user.getPassword(), user.getPhoneNumber(), DNICIFField.getText());
+                    Database.addIndividualUser(user, indUser, address, creditCard);
+                } else {
+                    BusinessUser busUser = new BusinessUser(user.getName(), user.getEmail(), user.getPassword(), user.getPhoneNumber(), DNICIFField.getText());
+                    Database.addBusinessUser(user, busUser, address, creditCard);
+                }
+            }
+
         } catch (SQLException e) {
             e.printStackTrace();
         } catch (ClassNotFoundException e) {

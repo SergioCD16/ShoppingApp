@@ -30,6 +30,7 @@ public class PurchaseOrder {
         this.PurchaseDate = purchaseDate;
     }
 
+    @Override
     public String toString() {
         return "User ID: " + (this.UserID) + ", Purchase Date: " + (this.PurchaseDate);
     }

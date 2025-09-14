@@ -38,8 +38,22 @@ public class Address {
         this.City = city;
     }
 
+    @Override
     public String toString() {
         return ("Street Name: " + (this.StreetName) + ", Number: " + (this.Number) + ", Zip Code: " +
                 (this.ZipCode) + ", City: " + (this.City));
+    }
+
+    public static String capitalizeWords(String input) {
+        String[] words = input.trim().toLowerCase().split("\\s+");
+        StringBuilder capitalized = new StringBuilder();
+
+        for (String word : words) {
+            capitalized.append(Character.toUpperCase(word.charAt(0)))
+                    .append(word.substring(1))
+                    .append(" ");
+        }
+
+        return capitalized.toString().trim();
     }
 }
