@@ -30,7 +30,7 @@ public class Database {
                 stmt.setString(2, user.getEmail());
                 stmt.setString(3, user.getPassword());
                 stmt.setString(4, user.getPhoneNumber());
-                stmt.setString(5, user instanceof IndividualUser ? "INDIVIDUAL" : "BUSINESS");
+                stmt.setString(5, "INDIVIDUAL");
 
                 stmt.executeUpdate();
                 try (ResultSet rs = stmt.getGeneratedKeys()) {
@@ -90,7 +90,7 @@ public class Database {
                 stmt.setString(2, user.getEmail());
                 stmt.setString(3, user.getPassword());
                 stmt.setString(4, user.getPhoneNumber());
-                stmt.setString(5, user instanceof IndividualUser ? "INDIVIDUAL" : "BUSINESS");
+                stmt.setString(5, "BUSINESS");
 
                 stmt.executeUpdate();
                 try (ResultSet rs = stmt.getGeneratedKeys()) {
@@ -132,8 +132,6 @@ public class Database {
 
                 stmt.executeUpdate();
             }
-
-            System.out.println("User saved successfully");
 
         } catch (SQLException e) {
             e.printStackTrace();

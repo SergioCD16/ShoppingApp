@@ -2,8 +2,6 @@ package com.example.shoppingapp.controllers;
 
 import com.example.shoppingapp.classes.*;
 import com.example.shoppingapp.utils.*;
-import java.text.SimpleDateFormat;
-import java.text.ParseException;
 import javafx.event.ActionEvent;
 import javafx.scene.control.*;
 import javafx.fxml.FXMLLoader;
@@ -17,7 +15,6 @@ import javafx.fxml.FXML;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
 
 public class RegisterController {
     @FXML
@@ -80,23 +77,34 @@ public class RegisterController {
         stage.show();
     }
 
+    public void switchWindow(Stage stage, String fxmlFile) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource(fxmlFile));
+        stage.setTitle("Produtem");
+        stage.setScene(new Scene(root));
+        stage.show();
+    }
+
     @FXML
     void registerUser() {
         try {
             String selectedRole = chooseUserType.getValue();
+            boolean checkResultUser, checkResultAddress, checkResultCreditCard = false;
 
-            // problema, si esta vacio da error, pero se comprueba despues
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-            LocalDate expDate = LocalDate.parse(expirationDateField.getText(), formatter);
-
-            boolean checkResult;
             if (selectedRole.equals("Individual User")) {
-                checkResult = CheckRegistration.checkCompleteRegistration(true, usernameField.getText(), emailField.getText(), DNICIFField.getText(), phoneField.getText(), passwordField.getText(), cPasswordField.getText(), streetNameField.getText(), numberField.getText(), zipCodeField.getText(), cityField.getText(), creditCardField.getText(), fullNameField.getText(), CVVField.getText(), expDate);
+                checkResultUser = CheckRegistration.checkUserRegistration(true, usernameField.getText(), emailField.getText(), DNICIFField.getText(), phoneField.getText(), passwordField.getText(), cPasswordField.getText());
             } else {
-                checkResult = CheckRegistration.checkCompleteRegistration(false, usernameField.getText(), emailField.getText(), DNICIFField.getText(), phoneField.getText(), passwordField.getText(), cPasswordField.getText(), streetNameField.getText(), numberField.getText(), zipCodeField.getText(), cityField.getText(), creditCardField.getText(), fullNameField.getText(), CVVField.getText(), expDate);
+                checkResultUser = CheckRegistration.checkUserRegistration(false, usernameField.getText(), emailField.getText(), DNICIFField.getText(), phoneField.getText(), passwordField.getText(), cPasswordField.getText());
+            }
+            if (checkResultUser) {
+                checkResultAddress = CheckRegistration.checkAddressRegistration(streetNameField.getText(), numberField.getText(), zipCodeField.getText(), cityField.getText());
+                if (checkResultAddress) {
+                    checkResultCreditCard = CheckRegistration.checkCreditCardRegistration(creditCardField.getText(), fullNameField.getText(), CVVField.getText(),expirationDateField.getText());
+                }
             }
 
-            if (checkResult) {
+            if (checkResultCreditCard) {
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+                LocalDate expDate = LocalDate.parse(expirationDateField.getText(), formatter);
                 String streetName = Address.capitalizeWords(streetNameField.getText());
                 String fullName = Address.capitalizeWords(fullNameField.getText());
                 String city = Address.capitalizeWords(cityField.getText());
@@ -112,11 +120,16 @@ public class RegisterController {
                     BusinessUser busUser = new BusinessUser(user.getName(), user.getEmail(), user.getPassword(), user.getPhoneNumber(), DNICIFField.getText());
                     Database.addBusinessUser(user, busUser, address, creditCard);
                 }
+                FXUtils.showInformation("Registration complete", "The user has been registered successfully");
+                Stage stage = (Stage) fullNameField.getScene().getWindow();
+                switchWindow(stage, "/com/example/shoppingapp/login.fxml");
             }
 
         } catch (SQLException e) {
             e.printStackTrace();
         } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }

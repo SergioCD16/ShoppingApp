@@ -25,10 +25,9 @@ public class Main extends Application {
     }
 
     /* TODO
-    * -- terminar registro
     * -- hacer ventanas admin
-    * - limpiar codigo
     * - mejorar clases y .java con sql
+    * - limpiar codigo
     * - Hash password instead of String type
     * - Change suggestions of code improvement
     *
