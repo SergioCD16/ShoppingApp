@@ -15,6 +15,14 @@ public class User {
         this.UserID = 0; // The actual UserID is generated in MySQL Database afterward
     }
 
+    public User(String name, String email, String password, String phoneNumber, int userID) {
+        this.Name = name;
+        this.Email = email;
+        this.Password = password;
+        this.PhoneNumber = phoneNumber;
+        this.UserID = userID;
+    }
+
     public String getName() {
         return this.Name;
     }

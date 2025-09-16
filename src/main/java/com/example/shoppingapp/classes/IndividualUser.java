@@ -10,6 +10,11 @@ public class IndividualUser extends User {
         this.DNI = dni;
     }
 
+    public IndividualUser(String name, String email, String password, String phoneNumber, int userID, String dni) {
+        super(name, email, password, phoneNumber, userID);
+        this.DNI = dni;
+    }
+
     public String getDNI() {
         return this.DNI;
     }

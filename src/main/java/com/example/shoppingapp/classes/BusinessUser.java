@@ -10,6 +10,11 @@ public class BusinessUser extends User {
         this.CIF = cif;
     }
 
+    public BusinessUser(String name, String email, String password, String phoneNumber, int userID, String cif) {
+        super(name, email, password, phoneNumber, userID);
+        this.CIF = cif;
+    }
+
     public String getCIF() {
         return this.CIF;
     }

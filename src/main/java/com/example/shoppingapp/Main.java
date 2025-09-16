@@ -1,6 +1,5 @@
 package com.example.shoppingapp;
 
-import com.example.shoppingapp.utils.Database;
 import javafx.application.Application;
 import javafx.scene.image.Image;
 import javafx.fxml.FXMLLoader;
@@ -26,6 +25,7 @@ public class Main extends Application {
 
     /* TODO
     * -- hacer ventanas admin
+    * - hacer editar informacion usuario
     * - mejorar clases y .java con sql
     * - limpiar codigo
     * - Hash password instead of String type

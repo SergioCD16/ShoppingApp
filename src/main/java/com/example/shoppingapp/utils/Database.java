@@ -73,8 +73,6 @@ public class Database {
                 stmt.executeUpdate();
             }
 
-            System.out.println("User saved successfully");
-
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -129,6 +127,26 @@ public class Database {
 
                 stmt.setString(4, creditCard.getCVV());
                 stmt.setInt(5, userID);
+
+                stmt.executeUpdate();
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void addAdminUser(User user) {
+        try (Connection conn = Database.getConnection()) {
+
+            String userSQL = "INSERT INTO user (Name, Email, Password, PhoneNumber, Type) VALUES (?, ?, ?, ?, ?)";
+            int userID;
+            try (PreparedStatement stmt = conn.prepareStatement(userSQL, Statement.RETURN_GENERATED_KEYS)) {
+                stmt.setString(1, user.getName());
+                stmt.setString(2, user.getEmail());
+                stmt.setString(3, user.getPassword());
+                stmt.setString(4, user.getPhoneNumber());
+                stmt.setString(5, "ADMIN");
 
                 stmt.executeUpdate();
             }
