@@ -10,11 +10,12 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class adminMenuController {
+public class adminManageUsersMenuController {
+
     @FXML
-    void goToLogin(ActionEvent event) throws IOException {
+    void goToAdminMainMenu(ActionEvent event) throws IOException {
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        Parent root = FXMLLoader.load(getClass().getResource("/com/example/shoppingapp/login.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/com/example/shoppingapp/admin_menu.fxml"));
         stage.setTitle("Produtem");
         stage.setScene(new Scene(root));
         stage.show();

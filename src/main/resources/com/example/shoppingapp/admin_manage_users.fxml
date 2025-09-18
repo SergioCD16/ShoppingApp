@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="425.0" prefWidth="670.0" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.shoppingapp.controllers.adminMainMenuController">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="425.0" prefWidth="670.0" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.shoppingapp.controllers.adminManageUsersMenuController">
    <children>
       <MenuBar>
         <menus>
@@ -34,7 +34,7 @@
       </MenuBar>
       <Pane prefHeight="109.0" prefWidth="600.0" style="-fx-background-color: white;">
          <children>
-            <Label layoutX="87.0" layoutY="9.0" text="Welcome, Admin">
+            <Label layoutX="87.0" layoutY="9.0" text="User Management">
                <font>
                   <Font name="System Bold" size="45.0" />
                </font>
@@ -48,22 +48,27 @@
       </Pane>
       <Pane prefHeight="341.0" prefWidth="600.0" style="-fx-background-color: #212121;">
          <children>
-            <Button fx:id="logoutButton" layoutX="33.0" layoutY="265.0" mnemonicParsing="false" onAction="#goToLogin" text="Log Out">
+            <Button fx:id="goBackButton" layoutX="33.0" layoutY="265.0" mnemonicParsing="false" onAction="#goToAdminMainMenu" text="Go back">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
             </Button>
-            <Button fx:id="manageUsersButton" layoutX="60.0" layoutY="56.0" mnemonicParsing="false" onAction="#goToManageUsers" prefHeight="74.0" prefWidth="155.0" text="Manage Users">
+            <Button fx:id="checkUserButton" layoutX="102.0" layoutY="57.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="196.0" text="Check User">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
             </Button>
-            <Button fx:id="manageProductsButton" layoutX="460.0" layoutY="56.0" mnemonicParsing="false" onAction="#goToManageProducts" prefHeight="74.0" prefWidth="155.0" text="Manage Products">
+            <Button fx:id="editUserInfoButton" layoutX="374.0" layoutY="57.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="196.0" text="Edit User Info">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
             </Button>
-            <Button fx:id="managePurchasesButton" layoutX="258.0" layoutY="167.0" mnemonicParsing="false" onAction="#goToManagePurchases" prefHeight="74.0" prefWidth="155.0" text="Manage Purchases">
+            <Button fx:id="removeUserButton" layoutX="374.0" layoutY="145.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="196.0" text="Remove User">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Button>
+            <Button fx:id="registerUserButton" layoutX="102.0" layoutY="145.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="196.0" text="Register User">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>

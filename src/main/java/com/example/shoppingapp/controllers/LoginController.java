@@ -42,25 +42,33 @@ public class LoginController {
     void loginData(ActionEvent event) throws IOException {
         String email = emailField.getText();
         String password = passwordField.getText();
-        User user = login(email, password);
-
-        if (user != null) {
-            FXUtils.showInformation("Login Success", "Welcome back to Produtem");
-
-            String fxmlPath;
-            if (user instanceof IndividualUser || user instanceof BusinessUser) {
-                fxmlPath = "/com/example/shoppingapp/main_page.fxml";
-            } else {
-                fxmlPath = "/com/example/shoppingapp/admin_menu.fxml";
-            }
-
-            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            Parent root = FXMLLoader.load(getClass().getResource(fxmlPath));
-            stage.setScene(new Scene(root));
-            stage.show();
-
+        if (email.equals("")) {
+            FXUtils.showError("Login Error", "Email field is blank");
         } else {
-            FXUtils.showError("Login Error", "Incorrect email or password");
+            if  (password.equals("")) {
+                FXUtils.showError("Login Error", "Password field is blank");
+            } else {
+                User user = login(email, password);
+
+                if (user != null) {
+                    FXUtils.showInformation("Login Success", "Welcome back to Produtem");
+
+                    String fxmlPath;
+                    if (user instanceof IndividualUser || user instanceof BusinessUser) {
+                        fxmlPath = "/com/example/shoppingapp/main_page.fxml";
+                    } else {
+                        fxmlPath = "/com/example/shoppingapp/admin_menu.fxml";
+                    }
+
+                    Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                    Parent root = FXMLLoader.load(getClass().getResource(fxmlPath));
+                    stage.setScene(new Scene(root));
+                    stage.show();
+
+                } else {
+                    FXUtils.showError("Login Error", "Incorrect email or password");
+                }
+            }
         }
     }
 
