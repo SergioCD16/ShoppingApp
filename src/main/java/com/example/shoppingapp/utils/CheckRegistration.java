@@ -204,6 +204,56 @@ public class CheckRegistration {
         return true;
     }
 
+    public static boolean checkProductRegistration(String title, String price, String stock, String description, String picture) throws SQLException, ClassNotFoundException {
+        // Check Title
+        if (!checkBlankField(title)) {
+            FXUtils.showError("Error in title field", "Username field is blank");
+            return false;
+        }
+        if (!checkStringLength(title, 70, 10)) {
+            FXUtils.showError("Error in title field", "Incorrect length");
+            return false;
+        }
+        // Check Price
+        if (!checkBlankField(price)) {
+            FXUtils.showError("Error in price field", "Price field is blank");
+            return false;
+        }
+        if (!checkNumberIsFloat(price)) {
+            FXUtils.showError("Error in price field", "Incorrect format");
+            return false;
+        }
+        if (!checkFloatLength(price, 5000F, 0.01F)) {
+            FXUtils.showError("Error in price field", "Incorrect price, needs to be between 0.01 and 5000");
+            return false;
+        }
+        // Check Stock
+        if (!checkBlankField(stock)) {
+            FXUtils.showError("Error in stock field", "Stock field is blank");
+            return false;
+        }
+        if (!checkNumberIsInteger(stock)) {
+            FXUtils.showError("Error in stock field", "Incorrect format");
+            return false;
+        }
+        if (!checkNumberLength(stock, 1000, 1)) {
+            FXUtils.showError("Error in stock field", "Incorrect stock, needs to be between 1 and 1000");
+            return false;
+        }
+        // Check Picture
+
+        // Check Description
+        if (!checkBlankField(description)) {
+            FXUtils.showError("Error in description field", "Description field is blank");
+            return false;
+        }
+        if (!checkStringLength(description, 300, 10)) {
+            FXUtils.showError("Error in description field", "Incorrect length");
+            return false;
+        }
+        return true;
+    }
+
     /**
      * Checks an Email to have the correct format
      **/
@@ -301,7 +351,24 @@ public class CheckRegistration {
     }
 
     public static boolean checkNumberIsInteger(String number) {
-        return  number.matches("\\d+");
+        return number.matches("\\d+");
+    }
+
+    public static boolean checkFloatLength(String number, float upperLimit, float lowerLimit) {
+        if (number.length() >= lowerLimit && number.length() <= upperLimit) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public static boolean checkNumberIsFloat(String number) {
+        try {
+            Float.parseFloat(number);
+            return true; // valid float (integers like "123" also work)
+        } catch (NumberFormatException e) {
+            return false; // not a valid number
+        }
     }
 
     /**

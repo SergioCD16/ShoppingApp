@@ -13,8 +13,7 @@ import javafx.stage.Stage;
 import javafx.scene.Node;
 import javafx.fxml.FXML;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
+import static com.example.shoppingapp.utils.CheckRegistration.checkProductRegistration;
 
 public class RegisterProductAdminController {
     @FXML
@@ -43,6 +42,13 @@ public class RegisterProductAdminController {
         stage.show();
     }
 
+    public void switchWindow(Stage stage, String fxmlFile) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource(fxmlFile));
+        stage.setTitle("Produtem");
+        stage.setScene(new Scene(root));
+        stage.show();
+    }
+
     @FXML
     void addPicture() {
 
@@ -50,27 +56,28 @@ public class RegisterProductAdminController {
 
     @FXML
     void addProduct() {
+        try {
+            // hacer parte de picture: annadir picture boton, comprobar imagen y su formato, cambios en la imagen para unificar formato, guardar imagen como string?
+            // hacer database.addProduct
+            String picture = "";
 
+            boolean checkProduct = checkProductRegistration(titleField.getText(), priceField.getText(), stockField.getText(), descriptionField.getText(), descriptionField.getText());
+            if (checkProduct) {
+                float price = Float.parseFloat(priceField.getText());
+                int stock = Integer.parseInt(stockField.getText());
+                Product product = new Product(titleField.getText(), categoryChoiceBox.getValue(), descriptionField.getText(), picture, price, stock);
+                // Database.addProduct(product);
+                FXUtils.showInformation("Registration complete", "The product has been registered successfully");
+                Stage stage = (Stage) titleField.getScene().getWindow();
+                switchWindow(stage, "/com/example/shoppingapp/admin_manage_users.fxml");
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
-
-//    @FXML
-//    void addProduct() {
-//        try {
-//            // pasar string a float y string a int
-//            String picture;
-//            Product product = new Product(titleField.getText(), categoryChoiceBox.getValue(), descriptionField.getText(), picture, );
-//            boolean checkProduct = checkProductRegistration(product);
-//            if (checkProduct) {
-//                Database.addProduct(user, indUser, address, creditCard);
-//                FXUtils.showInformation("Registration complete", "The user has been registered successfully");
-//            }
-//
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        } catch (ClassNotFoundException e) {
-//            e.printStackTrace();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//    }
 }

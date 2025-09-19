@@ -68,7 +68,7 @@
                   <Font name="System Bold" size="14.0" />
                </font>
             </Button>
-            <Button fx:id="registerUserButton" layoutX="102.0" layoutY="145.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="196.0" text="Register User">
+            <Button fx:id="registerUserButton" layoutX="102.0" layoutY="145.0" mnemonicParsing="false" onAction="#goToRegisterUserAdmin" prefHeight="60.0" prefWidth="196.0" text="Register User">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>

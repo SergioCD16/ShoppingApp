@@ -20,4 +20,13 @@ public class adminManageUsersMenuController {
         stage.setScene(new Scene(root));
         stage.show();
     }
+
+    @FXML
+    void goToRegisterUserAdmin(ActionEvent event) throws IOException {
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        Parent root = FXMLLoader.load(getClass().getResource("/com/example/shoppingapp/register_user_admin.fxml"));
+        stage.setTitle("Produtem");
+        stage.setScene(new Scene(root));
+        stage.show();
+    }
 }

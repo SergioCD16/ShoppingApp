@@ -155,4 +155,24 @@ public class Database {
             e.printStackTrace();
         }
     }
+
+//    public static void addProduct(Product product) {
+//        try (Connection conn = Database.getConnection()) {
+//
+//            String userSQL = "INSERT INTO user (Name, Email, Password, PhoneNumber, Type) VALUES (?, ?, ?, ?, ?)";
+//            int productID;
+//            try (PreparedStatement stmt = conn.prepareStatement(userSQL, Statement.RETURN_GENERATED_KEYS)) {
+//                stmt.setString(1, user.getName());
+//                stmt.setString(2, user.getEmail());
+//                stmt.setString(3, user.getPassword());
+//                stmt.setString(4, user.getPhoneNumber());
+//                stmt.setString(5, "ADMIN");
+//
+//                stmt.executeUpdate();
+//            }
+//
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+//    }
 }
