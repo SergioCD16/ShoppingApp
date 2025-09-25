@@ -1,6 +1,11 @@
 package com.example.shoppingapp.utils;
 
 import com.example.shoppingapp.classes.*;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.math.BigDecimal;
 import java.sql.PreparedStatement;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -156,23 +161,37 @@ public class Database {
         }
     }
 
-//    public static void addProduct(Product product) {
-//        try (Connection conn = Database.getConnection()) {
-//
-//            String userSQL = "INSERT INTO user (Name, Email, Password, PhoneNumber, Type) VALUES (?, ?, ?, ?, ?)";
-//            int productID;
-//            try (PreparedStatement stmt = conn.prepareStatement(userSQL, Statement.RETURN_GENERATED_KEYS)) {
-//                stmt.setString(1, user.getName());
-//                stmt.setString(2, user.getEmail());
-//                stmt.setString(3, user.getPassword());
-//                stmt.setString(4, user.getPhoneNumber());
-//                stmt.setString(5, "ADMIN");
-//
-//                stmt.executeUpdate();
-//            }
-//
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
-//    }
+    public static void addProduct(Product product) {
+        String sql = "INSERT INTO Product (Title, Category, Description, Picture, Price, Stock, EntryDate) " + "VALUES (?, ?, ?, ?, ?, ?, ?)";
+
+        try (Connection conn = Database.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+
+            stmt.setString(1, product.getTitle());
+            stmt.setString(2, product.getCategory());
+            stmt.setString(3, product.getDescription());
+
+            byte[] picture = product.getPicture();
+            if (picture == null) {
+                File defaultImage = new File("src/main/resources/products/NotAvailable.png");
+                try (FileInputStream fis = new FileInputStream(defaultImage)) {
+                    picture = fis.readAllBytes();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            stmt.setBytes(4, picture);
+
+            stmt.setBigDecimal(5, BigDecimal.valueOf(product.getPrice()));
+            stmt.setInt(6, product.getStock());
+            stmt.setTimestamp(7, java.sql.Timestamp.valueOf(product.getEntryDate()));
+
+            stmt.executeUpdate();
+        }
+
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
 }

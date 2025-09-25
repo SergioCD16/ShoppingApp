@@ -204,7 +204,7 @@ public class CheckRegistration {
         return true;
     }
 
-    public static boolean checkProductRegistration(String title, String price, String stock, String description, String picture) throws SQLException, ClassNotFoundException {
+    public static boolean checkProductRegistration(String title, String price, String stock, String description, byte[] image) throws SQLException, ClassNotFoundException {
         // Check Title
         if (!checkBlankField(title)) {
             FXUtils.showError("Error in title field", "Username field is blank");
@@ -240,8 +240,6 @@ public class CheckRegistration {
             FXUtils.showError("Error in stock field", "Incorrect stock, needs to be between 1 and 1000");
             return false;
         }
-        // Check Picture
-
         // Check Description
         if (!checkBlankField(description)) {
             FXUtils.showError("Error in description field", "Description field is blank");
@@ -249,6 +247,11 @@ public class CheckRegistration {
         }
         if (!checkStringLength(description, 300, 10)) {
             FXUtils.showError("Error in description field", "Incorrect length");
+            return false;
+        }
+        // Check Image
+        if ((!checkImageSize(image)) && (image != null)) {
+            FXUtils.showError("Error in the image selected", "Size must be smaller than 64 KB");
             return false;
         }
         return true;
@@ -410,5 +413,10 @@ public class CheckRegistration {
         LocalDate expDate = LocalDate.parse(expDateS, formatter);
 
         return !expDate.isBefore(LocalDate.now());
+    }
+
+    public static boolean checkImageSize(byte[] data) {
+        int maxSize = 65535;
+        return data != null && data.length <= maxSize;
     }
 }

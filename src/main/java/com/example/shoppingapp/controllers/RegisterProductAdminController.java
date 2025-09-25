@@ -5,10 +5,19 @@ import com.example.shoppingapp.utils.*;
 import javafx.event.ActionEvent;
 import javafx.scene.control.*;
 import javafx.fxml.FXMLLoader;
+
+import java.io.File;
+import java.nio.file.Files;
+import java.sql.Blob;
 import java.sql.SQLException;
 import java.io.IOException;
+import java.util.Optional;
+
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.scene.Node;
 import javafx.fxml.FXML;
@@ -26,6 +35,11 @@ public class RegisterProductAdminController {
     private TextArea descriptionField;
     @FXML
     private ChoiceBox<String> categoryChoiceBox;
+    @FXML
+    private ImageView pictureImage;
+    @ FXML
+    private Button pictureButton;
+    byte[] productImage = null;
 
     @FXML
     public void initialize() {
@@ -50,26 +64,63 @@ public class RegisterProductAdminController {
     }
 
     @FXML
-    void addPicture() {
+    private void addPicture() throws IOException {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Choose Profile Image");
 
+        FileChooser.ExtensionFilter imageFilter = new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.jpeg");
+        fileChooser.getExtensionFilters().add(imageFilter);
+
+        Stage stage = (Stage) pictureButton.getScene().getWindow();
+        File selectedImageFile = fileChooser.showOpenDialog(stage);
+
+        if (selectedImageFile != null) {
+            productImage =  Files.readAllBytes(selectedImageFile.toPath());
+
+            Image image = new Image(selectedImageFile.toURI().toString());
+            pictureImage.setImage(image);
+            pictureImage.setFitWidth(150);
+            pictureImage.setFitHeight(150);
+            pictureImage.setPreserveRatio(true);
+        }
     }
+
 
     @FXML
     void addProduct() {
         try {
-            // hacer parte de picture: annadir picture boton, comprobar imagen y su formato, cambios en la imagen para unificar formato, guardar imagen como string?
-            // hacer database.addProduct
-            String picture = "";
-
-            boolean checkProduct = checkProductRegistration(titleField.getText(), priceField.getText(), stockField.getText(), descriptionField.getText(), descriptionField.getText());
+            boolean checkProduct = checkProductRegistration(titleField.getText(), priceField.getText(), stockField.getText(), descriptionField.getText(), productImage);
             if (checkProduct) {
-                float price = Float.parseFloat(priceField.getText());
-                int stock = Integer.parseInt(stockField.getText());
-                Product product = new Product(titleField.getText(), categoryChoiceBox.getValue(), descriptionField.getText(), picture, price, stock);
-                // Database.addProduct(product);
-                FXUtils.showInformation("Registration complete", "The product has been registered successfully");
-                Stage stage = (Stage) titleField.getScene().getWindow();
-                switchWindow(stage, "/com/example/shoppingapp/admin_manage_users.fxml");
+                if (productImage == null) {
+                    Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                    alert.setTitle("No image selected");
+                    alert.setHeaderText("No image was chosen");
+                    alert.setContentText("Do you want to continue without uploading a picture?");
+
+                    ButtonType yesButton = new ButtonType("Yes", ButtonBar.ButtonData.YES);
+                    ButtonType noButton = new ButtonType("No", ButtonBar.ButtonData.NO);
+
+                    alert.getButtonTypes().setAll(yesButton, noButton);
+
+                    Optional<ButtonType> result = alert.showAndWait();
+                    if (result.isPresent() && result.get() == yesButton) {
+                        float price = Float.parseFloat(priceField.getText());
+                        int stock = Integer.parseInt(stockField.getText());
+                        Product product = new Product(titleField.getText(), categoryChoiceBox.getValue(), descriptionField.getText(), productImage, price, stock);
+                        Database.addProduct(product);
+                        FXUtils.showInformation("Registration complete", "The product has been registered successfully");
+                        Stage stage = (Stage) titleField.getScene().getWindow();
+                        switchWindow(stage, "/com/example/shoppingapp/admin_manage_products.fxml");
+                    }
+                } else {
+                    float price = Float.parseFloat(priceField.getText());
+                    int stock = Integer.parseInt(stockField.getText());
+                    Product product = new Product(titleField.getText(), categoryChoiceBox.getValue(), descriptionField.getText(), productImage, price, stock);
+                    Database.addProduct(product);
+                    FXUtils.showInformation("Registration complete", "The product has been registered successfully");
+                    Stage stage = (Stage) titleField.getScene().getWindow();
+                    switchWindow(stage, "/com/example/shoppingapp/admin_manage_products.fxml");
+                }
             }
 
         } catch (SQLException e) {

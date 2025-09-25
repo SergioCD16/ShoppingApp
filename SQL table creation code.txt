@@ -51,7 +51,7 @@ CREATE TABLE Product (
     Title VARCHAR(100) NOT NULL,
     Category VARCHAR(50),
     Description TEXT,
-    Picture VARCHAR(255),
+    Picture BLOB,
     Price DECIMAL(10,2),
     Stock INT,
     EntryDate DATETIME DEFAULT NOW()

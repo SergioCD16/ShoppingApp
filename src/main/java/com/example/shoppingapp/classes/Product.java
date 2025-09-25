@@ -8,12 +8,12 @@ public class Product {
     private String Category;
     // It can be: (Components) (Computers) (Smartphones) (TV and audio) (Consoles and Videogames)
     private String Description;
-    private String Picture;
+    private byte[] Picture;
     private float Price;
     private int Stock;
     private LocalDateTime EntryDate;
 
-    public Product(String title, String category, String description, String picture, float price, int stock) {
+    public Product(String title, String category, String description, byte[] picture, float price, int stock) {
         this.Title = title;
         this.Category = category;
         this.Description = description;
@@ -32,7 +32,7 @@ public class Product {
     public String getDescription() {
         return this.Description;
     }
-    public String getPicture() {
+    public byte[] getPicture() {
         return this.Picture;
     }
     public float getPrice() {
@@ -54,7 +54,7 @@ public class Product {
     public void setDescription(String description) {
         this.Description = description;
     }
-    public void setPicture(String picture) {
+    public void setPicture(byte[] picture) {
         this.Picture = picture;
     }
     public void setPrice(float price) {

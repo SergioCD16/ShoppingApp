@@ -52,14 +52,14 @@
       <Pane prefHeight="341.0" prefWidth="600.0" style="-fx-background-color: #212121;">
          <children>
             <TextField fx:id="titleField" layoutX="33.0" layoutY="38.0" prefHeight="25.0" prefWidth="604.0" />
-            <TextField fx:id="priceField" layoutX="33.0" layoutY="87.0" prefHeight="25.0" prefWidth="129.0" />
-            <TextField fx:id="stockField" layoutX="195.0" layoutY="87.0" prefHeight="25.0" prefWidth="129.0" />
+            <TextField fx:id="priceField" layoutX="33.0" layoutY="87.0" prefHeight="25.0" prefWidth="116.0" />
+            <TextField fx:id="stockField" layoutX="190.0" layoutY="87.0" prefHeight="25.0" prefWidth="116.0" />
             <Button fx:id="goBackButton" layoutX="33.0" layoutY="265.0" mnemonicParsing="false" onAction="#goToProductMenu" text="Go back">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
             </Button>
-            <Button fx:id="addProductButton" layoutX="551.0" layoutY="265.0" mnemonicParsing="false" onAction="#addProduct" text="Add Product">
+            <Button fx:id="addProductButton" layoutX="360.0" layoutY="265.0" mnemonicParsing="false" onAction="#addProduct" text="Add Product">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
@@ -74,7 +74,7 @@
                   <Font name="System Bold" size="12.0" />
                </font>
             </Label>
-            <Label fx:id="DNICIFLabel" layoutX="195.0" layoutY="70.0" text="Stock:" textFill="WHITE">
+            <Label fx:id="DNICIFLabel" layoutX="190.0" layoutY="70.0" text="Stock:" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
@@ -84,18 +84,19 @@
                   <Font name="System Bold" size="12.0" />
                </font>
             </Label>
-            <Button fx:id="pictureButton" layoutX="517.0" layoutY="87.0" mnemonicParsing="false" onAction="#addPicture" text="Select Picture">
+            <Button fx:id="pictureButton" layoutX="527.0" layoutY="87.0" mnemonicParsing="false" onAction="#addPicture" text="Select Picture">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
             </Button>
-            <ChoiceBox fx:id="categoryChoiceBox" layoutX="357.0" layoutY="87.0" prefHeight="25.0" prefWidth="129.0" />
-            <Label layoutX="357.0" layoutY="70.0" text="Category:" textFill="WHITE">
+            <ChoiceBox fx:id="categoryChoiceBox" layoutX="349.0" layoutY="87.0" prefHeight="25.0" prefWidth="134.0" />
+            <Label layoutX="349.0" layoutY="70.0" text="Category:" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
             </Label>
-            <TextArea fx:id="descriptionField" layoutX="33.0" layoutY="139.0" prefHeight="107.0" prefWidth="604.0" wrapText="true" />
+            <TextArea fx:id="descriptionField" layoutX="33.0" layoutY="139.0" prefHeight="107.0" prefWidth="415.0" wrapText="true" />
+            <ImageView fx:id="pictureImage" fitHeight="150.0" fitWidth="150.0" layoutX="487.0" layoutY="140.0" pickOnBounds="true" preserveRatio="true" />
          </children>
       </Pane>
    </children>
