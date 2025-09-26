@@ -15,5 +15,7 @@ module com.example.shoppingapp {
     requires javafx.graphics;
 
     opens com.example.shoppingapp.controllers to javafx.fxml;
+    opens com.example.shoppingapp.classes to javafx.base;
+    opens com.example.shoppingapp to javafx.fxml;
     exports com.example.shoppingapp;
 }

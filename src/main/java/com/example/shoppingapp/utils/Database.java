@@ -14,6 +14,8 @@ import java.sql.Statement;
 import java.sql.ResultSet;
 import java.time.LocalDate;
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class Database {
@@ -190,6 +192,64 @@ public class Database {
         }
 
         catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static List<User> getAllUsers() {
+        List<User> users = new ArrayList<>();
+        String sql = "SELECT UserID, Name, Email, PhoneNumber, Type FROM user";
+
+        try (Connection conn = Database.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql);
+             ResultSet rs = stmt.executeQuery()) {
+
+            while (rs.next()) {
+                User user = new User(
+                        rs.getString("Name"),
+                        rs.getString("Email"),
+                        null,
+                        rs.getString("PhoneNumber"),
+                        rs.getString("Type"),
+                        rs.getInt("UserID")
+                );
+                if (!user.getType().equals("ADMIN")) {
+                    users.add(user);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return users;
+    }
+
+    public static void updateUser(User user) {
+        String sql = "UPDATE user SET Name=?, Email=?, PhoneNumber=?, Type=? WHERE UserID=?";
+
+        try (Connection conn = Database.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, user.getName());
+            stmt.setString(2, user.getEmail());
+            stmt.setString(3, user.getPhoneNumber());
+            stmt.setString(4, user.getType());
+            stmt.setInt(5, user.getUserID());
+
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void deleteUser(int userId) {
+        String sql = "DELETE FROM user WHERE UserID=?";
+
+        try (Connection conn = Database.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setInt(1, userId);
+            stmt.executeUpdate();
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }

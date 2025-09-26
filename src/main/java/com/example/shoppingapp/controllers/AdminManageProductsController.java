@@ -21,12 +21,4 @@ public class AdminManageProductsController {
         stage.show();
     }
 
-    @FXML
-    void goToRegisterProductAdmin(ActionEvent event) throws IOException {
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        Parent root = FXMLLoader.load(getClass().getResource("/com/example/shoppingapp/admin_register_product.fxml"));
-        stage.setTitle("Produtem");
-        stage.setScene(new Scene(root));
-        stage.show();
-    }
 }

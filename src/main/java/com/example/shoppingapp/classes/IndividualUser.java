@@ -5,13 +5,13 @@ import java.util.ArrayList;
 public class IndividualUser extends User {
     private String DNI;
 
-    public IndividualUser(String name, String email, String password, String phoneNumber, String dni) {
-        super(name, email, password, phoneNumber);
+    public IndividualUser(String name, String email, String password, String phoneNumber, String dni, String type) {
+        super(name, email, password, phoneNumber, type);
         this.DNI = dni;
     }
 
-    public IndividualUser(String name, String email, String password, String phoneNumber, int userID, String dni) {
-        super(name, email, password, phoneNumber, userID);
+    public IndividualUser(String name, String email, String password, String phoneNumber, int userID, String dni, String type) {
+        super(name, email, password, phoneNumber, type, userID);
         this.DNI = dni;
     }
 

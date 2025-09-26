@@ -53,26 +53,6 @@
                   <Font name="System Bold" size="12.0" />
                </font>
             </Button>
-            <Button fx:id="checkProductButton" layoutX="102.0" layoutY="57.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="196.0" text="Check Product">
-               <font>
-                  <Font name="System Bold" size="14.0" />
-               </font>
-            </Button>
-            <Button fx:id="editProductInfoButton" layoutX="374.0" layoutY="57.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="196.0" text="Edit Product Info">
-               <font>
-                  <Font name="System Bold" size="14.0" />
-               </font>
-            </Button>
-            <Button fx:id="removeProductButton" layoutX="374.0" layoutY="145.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="196.0" text="Remove Product">
-               <font>
-                  <Font name="System Bold" size="14.0" />
-               </font>
-            </Button>
-            <Button fx:id="registerProductButton" layoutX="102.0" layoutY="145.0" mnemonicParsing="false" onAction="#goToRegisterProductAdmin" prefHeight="60.0" prefWidth="196.0" text="Register Product">
-               <font>
-                  <Font name="System Bold" size="14.0" />
-               </font>
-            </Button>
          </children>
       </Pane>
    </children>

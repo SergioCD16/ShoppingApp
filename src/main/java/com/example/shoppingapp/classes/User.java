@@ -6,21 +6,24 @@ public class User {
     private String Password;
     private String PhoneNumber;
     private int UserID;
+    private String Type;
 
-    public User(String name, String email, String password, String phoneNumber) {
+    public User(String name, String email, String password, String phoneNumber, String type) {
+        this.UserID = 0;
         this.Name = name;
         this.Email = email;
         this.Password = password;
         this.PhoneNumber = phoneNumber;
-        this.UserID = 0; // The actual UserID is generated in MySQL Database afterward
+        this.Type = type;
     }
 
-    public User(String name, String email, String password, String phoneNumber, int userID) {
+    public User(String name, String email, String password, String phoneNumber, String type, int userID) {
+        this.UserID = userID;
         this.Name = name;
         this.Email = email;
         this.Password = password;
         this.PhoneNumber = phoneNumber;
-        this.UserID = userID;
+        this.Type = type;
     }
 
     public String getName() {
@@ -38,6 +41,9 @@ public class User {
     public int getUserID() {
         return this.UserID;
     }
+    public String getType() {
+        return this.Type;
+    }
     public void setName(String name) {
         this.Name = name;
     }
@@ -52,6 +58,9 @@ public class User {
     }
     public void setUserID(int userID) {
         this.UserID = userID;
+    }
+    public void setType(String type) {
+        this.Type = type;
     }
 
     @Override

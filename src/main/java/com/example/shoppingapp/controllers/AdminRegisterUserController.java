@@ -111,13 +111,14 @@ public class AdminRegisterUserController {
 
                 CreditCard creditCard = new CreditCard(fullName, creditCardField.getText(), CVVField.getText(), expDate);
                 Address address = new Address(streetName, numberField.getText(), zipCodeField.getText(), city);
-                User user = new User(usernameField.getText(), emailField.getText(), passwordField.getText(), phoneField.getText());
 
                 if (selectedRole.equals("Individual User")) {
-                    IndividualUser indUser = new IndividualUser(user.getName(), user.getEmail(), user.getPassword(), user.getPhoneNumber(), DNICIFField.getText());
+                    User user = new User(usernameField.getText(), emailField.getText(), passwordField.getText(), phoneField.getText(), "INDIVIDUAL");
+                    IndividualUser indUser = new IndividualUser(user.getName(), user.getEmail(), user.getPassword(), user.getPhoneNumber(), DNICIFField.getText(), "INDIVIDUAL");
                     Database.addIndividualUser(user, indUser, address, creditCard);
                 } else {
-                    BusinessUser busUser = new BusinessUser(user.getName(), user.getEmail(), user.getPassword(), user.getPhoneNumber(), DNICIFField.getText());
+                    User user = new User(usernameField.getText(), emailField.getText(), passwordField.getText(), phoneField.getText(), "BUSINESS");
+                    BusinessUser busUser = new BusinessUser(user.getName(), user.getEmail(), user.getPassword(), user.getPhoneNumber(), DNICIFField.getText(), "BUSINESS");
                     Database.addBusinessUser(user, busUser, address, creditCard);
                 }
                 FXUtils.showInformation("Registration complete", "The user has been registered successfully");

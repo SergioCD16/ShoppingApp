@@ -5,13 +5,13 @@ import java.util.ArrayList;
 public class BusinessUser extends User {
     private String CIF;
 
-    public BusinessUser(String name, String email, String password, String phoneNumber, String cif) {
-        super(name, email, password, phoneNumber);
+    public BusinessUser(String name, String email, String password, String phoneNumber, String cif, String type) {
+        super(name, email, password, phoneNumber, type);
         this.CIF = cif;
     }
 
-    public BusinessUser(String name, String email, String password, String phoneNumber, int userID, String cif) {
-        super(name, email, password, phoneNumber, userID);
+    public BusinessUser(String name, String email, String password, String phoneNumber, int userID, String cif, String type) {
+        super(name, email, password, phoneNumber, type, userID);
         this.CIF = cif;
     }
 

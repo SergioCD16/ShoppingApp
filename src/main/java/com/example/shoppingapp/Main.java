@@ -16,18 +16,18 @@ public class Main extends Application {
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("login.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 670, 425);
+        stage.getIcons().add(new Image(getClass().getResource("/logo/produtem_4.png").toExternalForm()));
         stage.setTitle("Produtem");
         stage.setScene(scene);
-
-        stage.getIcons().add(new Image(getClass().getResource("/logo/produtem_4.png").toExternalForm()));
         stage.show();
     }
 
     /* TODO
     * -- hacer ventanas admin
-    * - hacer editar informacion usuario
+    * -- limpiar codigo
+    * - hacer editar informacion usuario desde usuario
+    *
     * - mejorar clases y .java con sql
-    * - limpiar codigo
     * - Hash password instead of String type
     * - Change suggestions of code improvement
     *

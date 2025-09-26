@@ -93,6 +93,7 @@ public class LoginController {
                                     rs.getString("Email"),
                                     rs.getString("Password"),
                                     rs.getString("PhoneNumber"),
+                                    rs.getString("Type"),
                                     rs.getInt("UserID")
                             );
                         } else if (type.equals("INDIVIDUAL")) {
@@ -102,7 +103,8 @@ public class LoginController {
                                     rs.getString("Password"),
                                     rs.getString("PhoneNumber"),
                                     rs.getInt("UserID"),
-                                    rs.getString("DNI"));
+                                    rs.getString("DNI"),
+                                    rs.getString("Type"));
                         } else {
                             return new BusinessUser(
                                     rs.getString("Name"),
@@ -110,7 +112,8 @@ public class LoginController {
                                     rs.getString("Password"),
                                     rs.getString("PhoneNumber"),
                                     rs.getInt("UserID"),
-                                    rs.getString("CIF"));
+                                    rs.getString("CIF"),
+                                    rs.getString("Type"));
                         }
                     }
                 }
