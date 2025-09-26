@@ -16,7 +16,7 @@ import javafx.fxml.FXML;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
-public class RegisterUserAdminController {
+public class AdminRegisterUserController {
     @FXML
     private Button loginButton;
     @FXML
@@ -69,9 +69,9 @@ public class RegisterUserAdminController {
     }
 
     @FXML
-    void goToManageUsersAdmin(ActionEvent event) throws IOException {
+    void goToAdminMenu(ActionEvent event) throws IOException {
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        Parent root = FXMLLoader.load(getClass().getResource("/com/example/shoppingapp/admin_manage_users.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/com/example/shoppingapp/admin_menu.fxml"));
         stage.setTitle("Produtem");
         stage.setScene(new Scene(root));
         stage.show();
@@ -122,7 +122,7 @@ public class RegisterUserAdminController {
                 }
                 FXUtils.showInformation("Registration complete", "The user has been registered successfully");
                 Stage stage = (Stage) fullNameField.getScene().getWindow();
-                switchWindow(stage, "/com/example/shoppingapp/admin_manage_users.fxml");
+                switchWindow(stage, "/com/example/shoppingapp/admin_menu.fxml");
             }
 
         } catch (SQLException e) {

@@ -10,7 +10,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class adminMainMenuController {
+public class AdminMainMenuController {
     @FXML
     void goToLogin(ActionEvent event) throws IOException {
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -21,9 +21,27 @@ public class adminMainMenuController {
     }
 
     @FXML
-    void goToManageUsers(ActionEvent event) throws IOException {
+    void goToRegisterUsers(ActionEvent event) throws IOException {
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        Parent root = FXMLLoader.load(getClass().getResource("/com/example/shoppingapp/admin_manage_users.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/com/example/shoppingapp/admin_register_user.fxml"));
+        stage.setTitle("Produtem");
+        stage.setScene(new Scene(root));
+        stage.show();
+    }
+
+    @FXML
+    void goToRegisterProducts(ActionEvent event) throws IOException {
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        Parent root = FXMLLoader.load(getClass().getResource("/com/example/shoppingapp/admin_register_product.fxml"));
+        stage.setTitle("Produtem");
+        stage.setScene(new Scene(root));
+        stage.show();
+    }
+
+    @FXML
+    void goToManagePurchases(ActionEvent event) throws IOException {
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        Parent root = FXMLLoader.load(getClass().getResource("/com/example/shoppingapp/admin_manage_purchases.fxml"));
         stage.setTitle("Produtem");
         stage.setScene(new Scene(root));
         stage.show();
@@ -39,9 +57,9 @@ public class adminMainMenuController {
     }
 
     @FXML
-    void goToManagePurchases(ActionEvent event) throws IOException {
+    void goToManageUsers(ActionEvent event) throws IOException {
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        Parent root = FXMLLoader.load(getClass().getResource("/com/example/shoppingapp/admin_manage_purchases.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/com/example/shoppingapp/admin_manage_users.fxml"));
         stage.setTitle("Produtem");
         stage.setScene(new Scene(root));
         stage.show();

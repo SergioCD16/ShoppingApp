@@ -8,7 +8,6 @@ import javafx.fxml.FXMLLoader;
 
 import java.io.File;
 import java.nio.file.Files;
-import java.sql.Blob;
 import java.sql.SQLException;
 import java.io.IOException;
 import java.util.Optional;
@@ -24,7 +23,7 @@ import javafx.fxml.FXML;
 
 import static com.example.shoppingapp.utils.CheckRegistration.checkProductRegistration;
 
-public class RegisterProductAdminController {
+public class AdminRegisterProductController {
     @FXML
     private TextField titleField;
     @FXML
@@ -48,9 +47,9 @@ public class RegisterProductAdminController {
     }
 
     @FXML
-    void goToProductMenu(ActionEvent event) throws IOException {
+    void goToAdminMenu(ActionEvent event) throws IOException {
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        Parent root = FXMLLoader.load(getClass().getResource("/com/example/shoppingapp/admin_manage_products.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/com/example/shoppingapp/admin_menu.fxml"));
         stage.setTitle("Produtem");
         stage.setScene(new Scene(root));
         stage.show();
@@ -110,7 +109,7 @@ public class RegisterProductAdminController {
                         Database.addProduct(product);
                         FXUtils.showInformation("Registration complete", "The product has been registered successfully");
                         Stage stage = (Stage) titleField.getScene().getWindow();
-                        switchWindow(stage, "/com/example/shoppingapp/admin_manage_products.fxml");
+                        switchWindow(stage, "/com/example/shoppingapp/admin_menu.fxml");
                     }
                 } else {
                     float price = Float.parseFloat(priceField.getText());
@@ -119,7 +118,7 @@ public class RegisterProductAdminController {
                     Database.addProduct(product);
                     FXUtils.showInformation("Registration complete", "The product has been registered successfully");
                     Stage stage = (Stage) titleField.getScene().getWindow();
-                    switchWindow(stage, "/com/example/shoppingapp/admin_manage_products.fxml");
+                    switchWindow(stage, "/com/example/shoppingapp/admin_menu.fxml");
                 }
             }
 

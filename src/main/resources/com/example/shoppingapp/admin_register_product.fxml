@@ -14,7 +14,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="425.0" prefWidth="670.0" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.shoppingapp.controllers.RegisterProductAdminController">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="425.0" prefWidth="670.0" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.shoppingapp.controllers.AdminRegisterProductController">
    <children>
       <MenuBar>
         <menus>
@@ -54,7 +54,7 @@
             <TextField fx:id="titleField" layoutX="33.0" layoutY="38.0" prefHeight="25.0" prefWidth="604.0" />
             <TextField fx:id="priceField" layoutX="33.0" layoutY="87.0" prefHeight="25.0" prefWidth="116.0" />
             <TextField fx:id="stockField" layoutX="190.0" layoutY="87.0" prefHeight="25.0" prefWidth="116.0" />
-            <Button fx:id="goBackButton" layoutX="33.0" layoutY="265.0" mnemonicParsing="false" onAction="#goToProductMenu" text="Go back">
+            <Button fx:id="goBackButton" layoutX="33.0" layoutY="265.0" mnemonicParsing="false" onAction="#goToAdminMenu" text="Go back">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>

@@ -10,7 +10,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class adminManagePurchasesMenuController {
+public class AdminManagePurchasesController {
 
     @FXML
     void goToAdminMainMenu(ActionEvent event) throws IOException {

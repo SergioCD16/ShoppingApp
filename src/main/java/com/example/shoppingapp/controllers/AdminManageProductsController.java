@@ -10,7 +10,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class adminManageUsersMenuController {
+public class AdminManageProductsController {
 
     @FXML
     void goToAdminMainMenu(ActionEvent event) throws IOException {
@@ -22,9 +22,9 @@ public class adminManageUsersMenuController {
     }
 
     @FXML
-    void goToRegisterUserAdmin(ActionEvent event) throws IOException {
+    void goToRegisterProductAdmin(ActionEvent event) throws IOException {
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        Parent root = FXMLLoader.load(getClass().getResource("/com/example/shoppingapp/register_user_admin.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/com/example/shoppingapp/admin_register_product.fxml"));
         stage.setTitle("Produtem");
         stage.setScene(new Scene(root));
         stage.show();
