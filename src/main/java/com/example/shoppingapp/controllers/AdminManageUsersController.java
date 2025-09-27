@@ -1,7 +1,8 @@
 package com.example.shoppingapp.controllers;
 
-import com.example.shoppingapp.classes.User;
+import com.example.shoppingapp.classes.*;
 import com.example.shoppingapp.utils.Database;
+import com.example.shoppingapp.utils.FXUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -16,6 +17,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Objects;
 
 public class AdminManageUsersController {
     @FXML
@@ -34,7 +36,7 @@ public class AdminManageUsersController {
     @FXML
     void goToAdminMainMenu(ActionEvent event) throws IOException {
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        Parent root = FXMLLoader.load(getClass().getResource("/com/example/shoppingapp/admin_menu.fxml"));
+        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/com/example/shoppingapp/admin_menu.fxml")));
         stage.setTitle("Produtem");
         stage.setScene(new Scene(root));
         stage.show();
@@ -50,6 +52,36 @@ public class AdminManageUsersController {
 
         List<User> users = Database.getAllUsers();
         usersTable.getItems().setAll(users);
+    }
+
+    @FXML
+    private void selectUser(ActionEvent event) throws IOException {
+        User userAux = usersTable.getSelectionModel().getSelectedItem();
+        if (userAux != null) {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/shoppingapp/admin_edit_user.fxml"));
+            Parent root = loader.load();
+
+            AdminEditUserController controller = loader.getController();
+
+            int userID = userAux.getUserID();
+            User user = Database.getUserByID(userID);
+            Address address = Database.getAddressesByUserID(userID);
+            CreditCard creditCard = Database.getCreditCardsByUserID(userID);
+            if (user.getType().equals("INDIVIDUAL")) {
+                IndividualUser indUser = Database.getIndividualUserByID(userID, user);
+                controller.setUser(user, indUser, address, creditCard);
+            } else {
+                BusinessUser busUser = Database.getBusinessUserByID(userID, user);
+                controller.setUser(user, busUser, address, creditCard);
+            }
+
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setTitle("Produtem");
+            stage.setScene(new Scene(root));
+            stage.show();
+        } else {
+            FXUtils.showError("Selection error", "Select a user from the table");
+        }
     }
 
 }

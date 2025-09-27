@@ -223,32 +223,214 @@ public class Database {
         return users;
     }
 
-    public static void updateUser(User user) {
-        String sql = "UPDATE user SET Name=?, Email=?, PhoneNumber=?, Type=? WHERE UserID=?";
+    public static User getUserByID(int userID) {
+        try (Connection conn = Database.getConnection()) {
+            String sql = "SELECT * FROM User WHERE UserID = ?";
+            try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+                stmt.setInt(1, userID);
+                ResultSet rs = stmt.executeQuery();
+                if (rs.next()) {
+                    return new User(
+                            rs.getString("Name"),
+                            rs.getString("Email"),
+                            rs.getString("Password"),
+                            rs.getString("PhoneNumber"),
+                            rs.getString("Type")
+                    );
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 
-        try (Connection conn = Database.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
+    public static BusinessUser getBusinessUserByID(int userID, User user) {
+        try (Connection conn = Database.getConnection()) {
+            String sql = "SELECT * FROM BusinessUser WHERE UserID = ?";
+            try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+                stmt.setInt(1, userID);
+                ResultSet rs = stmt.executeQuery();
+                if (rs.next()) {
+                    return new BusinessUser(user.getName(), user.getEmail(), user.getPassword(), user.getPhoneNumber(),
+                            rs.getString("CIF"), user.getType());
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 
-            stmt.setString(1, user.getName());
-            stmt.setString(2, user.getEmail());
-            stmt.setString(3, user.getPhoneNumber());
-            stmt.setString(4, user.getType());
-            stmt.setInt(5, user.getUserID());
+    public static IndividualUser getIndividualUserByID(int userID, User user) {
+        try (Connection conn = Database.getConnection()) {
+            String sql = "SELECT * FROM IndividualUser WHERE UserID = ?";
+            try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+                stmt.setInt(1, userID);
+                ResultSet rs = stmt.executeQuery();
+                if (rs.next()) {
+                    return new IndividualUser(user.getName(), user.getEmail(), user.getPassword(), user.getPhoneNumber(),
+                            rs.getString("DNI"), user.getType());
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 
-            stmt.executeUpdate();
+    public static CreditCard getCreditCardsByUserID(int userID) {
+        List<CreditCard> cards = new ArrayList<>();
+        try (Connection conn = Database.getConnection()) {
+            String sql = "SELECT * FROM CreditCard WHERE UserID = ?";
+            try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+                stmt.setInt(1, userID);
+                ResultSet rs = stmt.executeQuery();
+                if (rs.next()) {
+                    return new CreditCard(
+                            rs.getString("Name"),
+                            rs.getString("Number"),
+                            rs.getString("CVV"),
+                            rs.getDate("ExpDate").toLocalDate()
+                    );
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public static Address getAddressesByUserID(int userID) {
+        List<Address> addresses = new ArrayList<>();
+        try (Connection conn = Database.getConnection()) {
+            String sql = "SELECT * FROM Address WHERE UserID = ?";
+            try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+                stmt.setInt(1, userID);
+                ResultSet rs = stmt.executeQuery();
+                if (rs.next()) {
+                    return new Address(
+                            rs.getString("StreetName"),
+                            rs.getString("Number"),
+                            rs.getString("ZipCode"),
+                            rs.getString("City")
+                    );
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public static void updateIndividualUser(User user, IndividualUser indUser, Address address, CreditCard creditCard) {
+        try (Connection conn = Database.getConnection()) {
+             conn.setAutoCommit(false);
+
+             try (PreparedStatement stmt = conn.prepareStatement("UPDATE user SET Name=?, Email=?, PhoneNumber=? WHERE UserID=?")) {
+                stmt.setString(1, user.getName());
+                stmt.setString(2, user.getEmail());
+                stmt.setString(3, user.getPhoneNumber());
+                stmt.setInt(4, user.getUserID());
+                stmt.executeUpdate();
+             }
+            try (PreparedStatement stmt = conn.prepareStatement("UPDATE individualuser SET DNI=? WHERE UserID=?")) {
+                stmt.setString(1, indUser.getDNI());
+                stmt.setInt(2, user.getUserID());
+                stmt.executeUpdate();
+            }
+            try (PreparedStatement stmt = conn.prepareStatement("UPDATE address SET StreetName=?, Number=?, ZipCode=?, City=? WHERE UserID=?")) {
+                stmt.setString(1, address.getStreetName());
+                stmt.setString(2, address.getNumber());
+                stmt.setString(3, address.getZipCode());
+                stmt.setString(4, address.getCity());
+                stmt.setInt(5, user.getUserID());
+                stmt.executeUpdate();
+            }
+            try (PreparedStatement stmt = conn.prepareStatement("UPDATE creditcard SET Name=?, Number=?, CVV=?, ExpDate=? WHERE UserID=?")) {
+                stmt.setString(1, creditCard.getName());
+                stmt.setString(2, creditCard.getNumber());
+                stmt.setString(3, creditCard.getCVV());
+                LocalDate exp = creditCard.getExpDate();
+                Date sqlExpDate = CreditCard.LocalDatetoSQLDate(exp);
+                stmt.setDate(4, sqlExpDate);
+                stmt.setInt(5, user.getUserID());
+                stmt.executeUpdate();
+            }
+             conn.commit();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void updateBusinessUser(User user, BusinessUser busUser, Address address, CreditCard creditCard) {
+        try (Connection conn = Database.getConnection()) {
+            conn.setAutoCommit(false);
+
+            try (PreparedStatement stmt = conn.prepareStatement("UPDATE user SET Name=?, Email=?, PhoneNumber=? WHERE UserID=?")) {
+                stmt.setString(1, user.getName());
+                stmt.setString(2, user.getEmail());
+                stmt.setString(3, user.getPhoneNumber());
+                stmt.setInt(4, user.getUserID());
+                stmt.executeUpdate();
+            }
+            try (PreparedStatement stmt = conn.prepareStatement("UPDATE businessuser SET CIF=? WHERE UserID=?")) {
+                stmt.setString(1, busUser.getCIF());
+                stmt.setInt(2, user.getUserID());
+                stmt.executeUpdate();
+            }
+            try (PreparedStatement stmt = conn.prepareStatement("UPDATE address SET StreetName=?, Number=?, ZipCode=?, City=? WHERE UserID=?")) {
+                stmt.setString(1, address.getStreetName());
+                stmt.setString(2, address.getNumber());
+                stmt.setString(3, address.getZipCode());
+                stmt.setString(4, address.getCity());
+                stmt.setInt(5, user.getUserID());
+                stmt.executeUpdate();
+            }
+            try (PreparedStatement stmt = conn.prepareStatement("UPDATE creditcard SET Name=?, Number=?, CVV=?, ExpDate=? WHERE UserID=?")) {
+                stmt.setString(1, creditCard.getName());
+                stmt.setString(2, creditCard.getNumber());
+                stmt.setString(3, creditCard.getCVV());
+                LocalDate exp = creditCard.getExpDate();
+                Date sqlExpDate = CreditCard.LocalDatetoSQLDate(exp);
+                stmt.setDate(4, sqlExpDate);
+                stmt.setInt(5, user.getUserID());
+                stmt.executeUpdate();
+            }
+            conn.commit();
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
     public static void deleteUser(int userId) {
-        String sql = "DELETE FROM user WHERE UserID=?";
+        try (Connection conn = Database.getConnection()) {
+            conn.setAutoCommit(false);
 
-        try (Connection conn = Database.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            try (PreparedStatement stmt = conn.prepareStatement("DELETE FROM CreditCard WHERE UserID = ?")) {
+                stmt.setInt(1, userId);
+                stmt.executeUpdate();
+            }
+            try (PreparedStatement stmt = conn.prepareStatement("DELETE FROM Address WHERE UserID = ?")) {
+                stmt.setInt(1, userId);
+                stmt.executeUpdate();
+            }
+            try (PreparedStatement stmt = conn.prepareStatement("DELETE FROM BusinessUser WHERE UserID = ?")) {
+                stmt.setInt(1, userId);
+                stmt.executeUpdate();
+            }
+            try (PreparedStatement stmt = conn.prepareStatement("DELETE FROM IndividualUser WHERE UserID = ?")) {
+                stmt.setInt(1, userId);
+                stmt.executeUpdate();
+            }
+            try (PreparedStatement stmt = conn.prepareStatement("DELETE FROM User WHERE UserID = ?")) {
+                stmt.setInt(1, userId);
+                stmt.executeUpdate();
+            }
+            conn.commit();
 
-            stmt.setInt(1, userId);
-            stmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }

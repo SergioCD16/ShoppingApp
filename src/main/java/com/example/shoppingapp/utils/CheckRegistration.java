@@ -100,6 +100,66 @@ public class CheckRegistration {
         return true;
     }
 
+    // IndOrBus = true (individual user), IndOrBus = false (business user)
+    public static boolean checkEditUser(boolean IndorBus, String username, String email, String DNICIF, String phoneNumber) throws SQLException, ClassNotFoundException {
+        // Check Username
+        if (!checkBlankField(username)) {
+            FXUtils.showError("Error in username field", "Username field is blank");
+            return false;
+        }
+        if (!checkStringLength(username, 20, 3)) {
+            FXUtils.showError("Error in username field", "Incorrect length");
+            return false;
+        }
+        // Check Email
+        if (!checkBlankField(email)) {
+            FXUtils.showError("Error in email field", "Email field is blank");
+            return false;
+        }
+        if (!checkEmail(email)) {
+            FXUtils.showError("Error in email field", "Invalid format");
+            return false;
+        }
+        if (!checkStringLength(email, 50, 9)) {
+            FXUtils.showError("Error in email field", "Incorrect length");
+            return false;
+        }
+        // Check DNI or CIF
+        if (IndorBus) {
+            if (!checkBlankField(DNICIF)) {
+                FXUtils.showError("Error in DNI field", "DNI field is blank");
+                return false;
+            }
+            if (!checkDNI(DNICIF)) {
+                FXUtils.showError("Error in DNI field", "Invalid format");
+                return false;
+            }
+        } else {
+            if (!checkBlankField(DNICIF)) {
+                FXUtils.showError("Error in CIF field", "CIF field is blank");
+                return false;
+            }
+            if (!checkCIF(DNICIF)) {
+                FXUtils.showError("Error in CIF field", "Invalid format");
+                return false;
+            }
+        }
+        // Check Phone Number
+        if (!checkBlankField(phoneNumber)) {
+            FXUtils.showError("Error in phone number field", "Phone number field is blank");
+            return false;
+        }
+        if (!checkNumberIsInteger(phoneNumber)) {
+            FXUtils.showError("Error in phone number field", "Invalid format");
+            return false;
+        }
+        if (!checkNumberLength(phoneNumber, 10, 7)) {
+            FXUtils.showError("Error in phone number field", "Incorrect length");
+            return false;
+        }
+        return true;
+    }
+
     public static boolean checkAddressRegistration(String streetName, String number, String zipCode, String city) throws SQLException, ClassNotFoundException {
         // Check Street Name
         if (!checkBlankField(streetName)) {
