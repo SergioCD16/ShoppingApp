@@ -58,10 +58,10 @@
             </Button>
             <TableView fx:id="usersTable" layoutX="34.0" layoutY="28.0" prefHeight="214.0" prefWidth="603.0">
               <columns>
-                  <TableColumn fx:id="colUserID" prefWidth="70.0" text="User ID" />
-                <TableColumn fx:id="colUsername" prefWidth="130.0" text="Username" />
-                <TableColumn fx:id="colEmail" prefWidth="191.0" text="Email" />
-                  <TableColumn fx:id="colPhoneNumber" minWidth="9.0" prefWidth="119.0" text="Phone Number" />
+                  <TableColumn fx:id="colUserID" prefWidth="51.33334732055664" text="User ID" />
+                <TableColumn fx:id="colUsername" prefWidth="138.66667938232422" text="Username" />
+                <TableColumn fx:id="colEmail" prefWidth="222.66664123535156" text="Email" />
+                  <TableColumn fx:id="colPhoneNumber" minWidth="9.0" prefWidth="98.66659545898438" text="Phone Number" />
                   <TableColumn fx:id="colType" minWidth="7.0" prefWidth="85.0" text="User Type" />
               </columns>
             </TableView>

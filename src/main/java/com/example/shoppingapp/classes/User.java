@@ -8,8 +8,8 @@ public class User {
     private int UserID;
     private String Type;
 
-    public User(String name, String email, String password, String phoneNumber, String type) {
-        this.UserID = 0;
+    public User(String name, String email, String password, String phoneNumber, String type, int userID) {
+        this.UserID = userID;
         this.Name = name;
         this.Email = email;
         this.Password = password;
@@ -17,8 +17,8 @@ public class User {
         this.Type = type;
     }
 
-    public User(String name, String email, String password, String phoneNumber, String type, int userID) {
-        this.UserID = userID;
+    public User(String name, String email, String password, String phoneNumber, String type) {
+        this.UserID = 0;
         this.Name = name;
         this.Email = email;
         this.Password = password;

@@ -15,7 +15,6 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.sql.SQLException;
 import java.util.List;
 import java.util.Objects;
 
@@ -69,10 +68,10 @@ public class AdminManageUsersController {
             CreditCard creditCard = Database.getCreditCardsByUserID(userID);
             if (user.getType().equals("INDIVIDUAL")) {
                 IndividualUser indUser = Database.getIndividualUserByID(userID, user);
-                controller.setUser(user, indUser, address, creditCard);
+                controller.setUser(user, indUser, address, creditCard, userID);
             } else {
                 BusinessUser busUser = Database.getBusinessUserByID(userID, user);
-                controller.setUser(user, busUser, address, creditCard);
+                controller.setUser(user, busUser, address, creditCard, userID);
             }
 
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();

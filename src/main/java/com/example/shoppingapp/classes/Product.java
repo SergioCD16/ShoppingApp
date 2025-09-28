@@ -1,5 +1,7 @@
 package com.example.shoppingapp.classes;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.time.LocalDateTime;
 
@@ -11,7 +13,19 @@ public class Product {
     private byte[] Picture;
     private float Price;
     private int Stock;
+    private int ProductID;
     private LocalDateTime EntryDate;
+
+    public Product(String title, String category, String description, byte[] picture, float price, int stock, int productID,  LocalDateTime entryDate) {
+        this.Title = title;
+        this.Category = category;
+        this.Description = description;
+        this.Picture = picture;
+        this.Price = price;
+        this.Stock = stock;
+        this.ProductID = productID;
+        this.EntryDate = entryDate;
+    }
 
     public Product(String title, String category, String description, byte[] picture, float price, int stock) {
         this.Title = title;
@@ -20,6 +34,7 @@ public class Product {
         this.Picture = picture;
         this.Price = price;
         this.Stock = stock;
+        this.ProductID = 0;
         this.EntryDate = LocalDateTime.now();
     }
 
@@ -41,8 +56,12 @@ public class Product {
     public int getStock() {
         return this.Stock;
     }
-    public LocalDateTime getEntryDate() {
-        return this.EntryDate;
+    public int getProductID() {
+        return this.ProductID;
+    }
+    public String getEntryDate() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        return this.EntryDate.format(formatter);
     }
 
     public void setTitle(String title) {
@@ -62,6 +81,9 @@ public class Product {
     }
     public void setStock(int stock) {
         this.Stock = stock;
+    }
+    public void setProductID(int productID) {
+        this.ProductID = productID;
     }
     public void setEntryDate(LocalDateTime entryDate) {
         this.EntryDate = entryDate;

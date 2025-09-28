@@ -58,6 +58,7 @@ public class AdminEditUserController {
     private BusinessUser busUser;
     private Address address;
     private CreditCard creditCard;
+    private int userID;
 
     @FXML
     void goToAdminMenu(ActionEvent event) throws IOException {
@@ -75,13 +76,14 @@ public class AdminEditUserController {
         stage.show();
     }
 
-    public void setUser(User user, IndividualUser indUser, Address address, CreditCard creditCard) {
+    public void setUser(User user, IndividualUser indUser, Address address, CreditCard creditCard, int userID) {
         DNICIFLabel.setText("DNI: ");
         titleLabel.setText("Edit Individual User");
         this.user = user;
         this.indUser = indUser;
         this.address = address;
         this.creditCard = creditCard;
+        this.userID = userID;
 
         usernameField.setText(user.getName());
         emailField.setText(user.getEmail());
@@ -97,13 +99,14 @@ public class AdminEditUserController {
         expirationDateField.setText(LocalDate.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")));
     }
 
-    public void setUser(User user, BusinessUser busUser, Address address, CreditCard creditCard) {
+    public void setUser(User user, BusinessUser busUser, Address address, CreditCard creditCard, int userID) {
         DNICIFLabel.setText("CIF: ");
         titleLabel.setText("Edit Business User");
         this.user = user;
         this.busUser = busUser;
         this.address = address;
         this.creditCard = creditCard;
+        this.userID = userID;
 
         usernameField.setText(user.getName());
         emailField.setText(user.getEmail());
@@ -152,6 +155,7 @@ public class AdminEditUserController {
                 } else {
                     busUser.setCIF(DNICIFField.getText());
                 }
+                user.setUserID(this.userID);
 
                 address.setStreetName(streetNameField.getText());
                 address.setNumber(numberField.getText());
@@ -192,7 +196,7 @@ public class AdminEditUserController {
         Optional<ButtonType> result = alert.showAndWait();
 
         if (result.isPresent() && result.get() == yesButton) {
-            Database.deleteUser(user.getUserID());
+            Database.deleteUser(this.userID);
             FXUtils.showInformation("User deleted", "The user has been removed successfully");
             Stage stage = (Stage) fullNameField.getScene().getWindow();
             switchWindow(stage, "/com/example/shoppingapp/admin_manage_users.fxml");

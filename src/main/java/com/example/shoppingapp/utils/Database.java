@@ -14,6 +14,7 @@ import java.sql.Statement;
 import java.sql.ResultSet;
 import java.time.LocalDate;
 import java.sql.Date;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -221,6 +222,36 @@ public class Database {
             e.printStackTrace();
         }
         return users;
+    }
+
+    public static List<Product> getAllProducts() {
+        List<Product> products = new ArrayList<>();
+        String sql = "SELECT ProductID, Title, Category, Description, Picture, Price, Stock, EntryDate FROM product";
+
+        try (Connection conn = Database.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql);
+             ResultSet rs = stmt.executeQuery()) {
+
+            while (rs.next()) {
+                Date sqlDate = rs.getDate("EntryDate");
+                LocalDateTime entryDate = sqlDate.toLocalDate().atStartOfDay();
+
+                Product product = new Product(
+                        rs.getString("Title"),
+                        rs.getString("Category"),
+                        rs.getString("Description"),
+                        rs.getBytes("Picture"),
+                        rs.getFloat("Price"),
+                        rs.getInt("Stock"),
+                        rs.getInt("ProductID"),
+                        entryDate
+                );
+                    products.add(product);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return products;
     }
 
     public static User getUserByID(int userID) {

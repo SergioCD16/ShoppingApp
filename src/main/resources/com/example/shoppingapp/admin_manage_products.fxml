@@ -5,6 +5,9 @@
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.ScrollBar?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.Pane?>
@@ -49,6 +52,22 @@
       <Pane prefHeight="341.0" prefWidth="600.0" style="-fx-background-color: #212121;">
          <children>
             <Button fx:id="goBackButton" layoutX="33.0" layoutY="265.0" mnemonicParsing="false" onAction="#goToAdminMainMenu" text="Go back">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Button>
+            <TableView fx:id="productsTable" layoutX="34.0" layoutY="28.0" prefHeight="214.0" prefWidth="603.0">
+              <columns>
+                  <TableColumn fx:id="colProductID" prefWidth="68.00000381469727" text="Product ID" />
+                <TableColumn fx:id="colTitle" prefWidth="198.66666412353516" text="Title" />
+                <TableColumn fx:id="colCategory" prefWidth="134.66668701171875" text="Category" />
+                  <TableColumn fx:id="colPrice" minWidth="9.0" prefWidth="57.3333740234375" text="Price" />
+                  <TableColumn fx:id="colStock" minWidth="7.0" prefWidth="56.666595458984375" text="Stock" />
+                  <TableColumn fx:id="colEntryDate" prefWidth="78.66668701171875" text="Entry Date" />
+              </columns>
+            </TableView>
+            <ScrollBar layoutX="630.0" layoutY="28.0" orientation="VERTICAL" prefHeight="214.0" prefWidth="14.0" />
+            <Button fx:id="selectProductButton" layoutX="547.0" layoutY="265.0" mnemonicParsing="false" onAction="#selectProduct" text="Select Product">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
