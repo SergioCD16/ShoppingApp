@@ -1,7 +1,8 @@
 package com.example.shoppingapp.controllers;
 
-import com.example.shoppingapp.classes.Product;
+import com.example.shoppingapp.classes.*;
 import com.example.shoppingapp.utils.Database;
+import com.example.shoppingapp.utils.FXUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -56,6 +57,23 @@ public class AdminManageProductsController {
 
     @FXML
     private void selectProduct(ActionEvent event) throws IOException {
+        Product productAux = productsTable.getSelectionModel().getSelectedItem();
+        if (productAux != null) {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/shoppingapp/admin_edit_product.fxml"));
+            Parent root = loader.load();
 
+            AdminEditProductController controller = loader.getController();
+
+            int productID = productAux.getProductID();
+            Product product = Database.getProductByID(productID);
+            controller.setProduct(product, productID);
+
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setTitle("Produtem");
+            stage.setScene(new Scene(root));
+            stage.show();
+        } else {
+            FXUtils.showError("Selection error", "Select a product from the table");
+        }
     }
 }

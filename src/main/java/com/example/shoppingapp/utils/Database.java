@@ -354,6 +354,34 @@ public class Database {
         return null;
     }
 
+    public static Product getProductByID(int userID) {
+        try (Connection conn = Database.getConnection()) {
+            String sql = "SELECT * FROM Product WHERE ProductID = ?";
+            try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+                stmt.setInt(1, userID);
+                ResultSet rs = stmt.executeQuery();
+                if (rs.next()) {
+                    Date sqlDate = rs.getDate("EntryDate");
+                    LocalDateTime entryDate = sqlDate.toLocalDate().atStartOfDay();
+
+                    return new Product(
+                            rs.getString("Title"),
+                            rs.getString("Category"),
+                            rs.getString("Description"),
+                            rs.getBytes("Picture"),
+                            rs.getFloat("Price"),
+                            rs.getInt("Stock"),
+                            rs.getInt("ProductID"),
+                            entryDate
+                    );
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     public static void updateIndividualUser(User user, IndividualUser indUser, Address address, CreditCard creditCard) {
         try (Connection conn = Database.getConnection()) {
              conn.setAutoCommit(false);
@@ -436,6 +464,10 @@ public class Database {
         }
     }
 
+    public static void updateProduct(Product product) {
+
+    }
+
     public static void deleteUser(int userId) {
         try (Connection conn = Database.getConnection()) {
             conn.setAutoCommit(false);
@@ -458,6 +490,20 @@ public class Database {
             }
             try (PreparedStatement stmt = conn.prepareStatement("DELETE FROM User WHERE UserID = ?")) {
                 stmt.setInt(1, userId);
+                stmt.executeUpdate();
+            }
+            conn.commit();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void deleteProduct(int productId) {
+        try (Connection conn = Database.getConnection()) {
+            conn.setAutoCommit(false);
+            try (PreparedStatement stmt = conn.prepareStatement("DELETE FROM Product WHERE ProductID = ?")) {
+                stmt.setInt(1, productId);
                 stmt.executeUpdate();
             }
             conn.commit();

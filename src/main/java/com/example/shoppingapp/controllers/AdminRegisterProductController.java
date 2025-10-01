@@ -74,7 +74,7 @@ public class AdminRegisterProductController {
         File selectedImageFile = fileChooser.showOpenDialog(stage);
 
         if (selectedImageFile != null) {
-            productImage =  Files.readAllBytes(selectedImageFile.toPath());
+            productImage = Files.readAllBytes(selectedImageFile.toPath());
 
             Image image = new Image(selectedImageFile.toURI().toString());
             pictureImage.setImage(image);
