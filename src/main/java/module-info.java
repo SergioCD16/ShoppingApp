@@ -13,6 +13,8 @@ module com.example.shoppingapp {
     requires com.almasb.fxgl.all;
     requires javafx.base;
     requires javafx.graphics;
+    requires java.desktop;
+    requires javafx.swing;
 
     opens com.example.shoppingapp.controllers to javafx.fxml;
     opens com.example.shoppingapp.classes to javafx.base;

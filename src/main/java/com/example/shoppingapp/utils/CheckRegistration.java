@@ -267,7 +267,7 @@ public class CheckRegistration {
     public static boolean checkProductRegistration(String title, String price, String stock, String description, byte[] image) throws SQLException, ClassNotFoundException {
         // Check Title
         if (!checkBlankField(title)) {
-            FXUtils.showError("Error in title field", "Username field is blank");
+            FXUtils.showError("Error in title field", "Title field is blank");
             return false;
         }
         if (!checkStringLength(title, 70, 10)) {

@@ -465,7 +465,24 @@ public class Database {
     }
 
     public static void updateProduct(Product product) {
+        try (Connection conn = Database.getConnection()) {
+            conn.setAutoCommit(false);
 
+            try (PreparedStatement stmt = conn.prepareStatement("UPDATE product SET Title=?, Price=?, Stock=?, Description=?, Category=?, Picture=? WHERE ProductID=?")) {
+                stmt.setString(1, product.getTitle());
+                stmt.setFloat(2, product.getPrice());
+                stmt.setInt(3, product.getStock());
+                stmt.setString(4, product.getDescription());
+                stmt.setString(5, product.getCategory());
+                stmt.setBytes(6, product.getPicture());
+                stmt.setInt(7, product.getProductID());
+                stmt.executeUpdate();
+            }
+            conn.commit();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     public static void deleteUser(int userId) {

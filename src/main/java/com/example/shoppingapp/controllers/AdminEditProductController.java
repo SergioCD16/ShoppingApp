@@ -2,11 +2,14 @@ package com.example.shoppingapp.controllers;
 
 import com.example.shoppingapp.classes.*;
 import com.example.shoppingapp.utils.*;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.scene.control.*;
 import javafx.fxml.FXMLLoader;
 
+import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.nio.file.Files;
 import java.sql.SQLException;
@@ -20,6 +23,7 @@ import javafx.stage.Stage;
 import javafx.scene.Node;
 import javafx.fxml.FXML;
 
+import javax.imageio.ImageIO;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Optional;
@@ -88,7 +92,48 @@ public class AdminEditProductController {
 
     @FXML
     private void editProduct() throws IOException, SQLException, ClassNotFoundException {
+        boolean productCheck = CheckRegistration.checkProductRegistration(titleField.getText(), priceField.getText(), stockField.getText(), descriptionField.getText(), productImage);
 
+        if (productCheck) {
+
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Confirm Edit");
+            alert.setHeaderText("Make sure all information is correct before proceeding");
+            alert.setContentText("Are you sure you want to save the changes to this product?");
+
+            ButtonType yesButton = new ButtonType("Yes", ButtonBar.ButtonData.YES);
+            ButtonType noButton = new ButtonType("No", ButtonBar.ButtonData.NO);
+
+            alert.getButtonTypes().setAll(yesButton, noButton);
+
+            Optional<ButtonType> result = alert.showAndWait();
+
+            if (result.isPresent() && result.get() == yesButton) {
+                product.setTitle(titleField.getText());
+                product.setPrice(Float.parseFloat(priceField.getText()));
+                product.setStock(Integer.parseInt(stockField.getText()));
+                product.setDescription(descriptionField.getText());
+                product.setPicture(imageToBytes(pictureImage.getImage()));
+
+                Database.updateProduct(product);
+
+                FXUtils.showInformation("Changes completed", "The product has been edited successfully");
+                Stage stage = (Stage) titleField.getScene().getWindow();
+                switchWindow(stage, "/com/example/shoppingapp/admin_manage_products.fxml");
+            }
+        }
+    }
+
+    public static byte[] imageToBytes(Image image) throws IOException {
+        if (image == null) {
+            return null;
+        } else {
+            BufferedImage bufferedImage = SwingFXUtils.fromFXImage(image, null);
+
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            ImageIO.write(bufferedImage, "png", baos);
+            return baos.toByteArray();
+        }
     }
 
     @FXML
