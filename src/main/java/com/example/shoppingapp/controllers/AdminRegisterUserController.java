@@ -57,7 +57,7 @@ public class AdminRegisterUserController {
     @FXML
     public void initialize() {
         chooseUserType.getItems().addAll("Individual User", "Business User");
-        chooseUserType.setValue("Individual User"); // default option
+        chooseUserType.setValue("Individual User");
 
         chooseUserType.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue.equals("Individual User")) {

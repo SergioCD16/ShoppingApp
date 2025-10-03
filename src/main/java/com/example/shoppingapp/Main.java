@@ -23,7 +23,6 @@ public class Main extends Application {
     }
 
     /* TODO
-    * -- hacer ventanas admin
     * -- limpiar codigo
     * - hacer editar informacion usuario desde usuario
     *

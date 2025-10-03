@@ -14,6 +14,7 @@ import java.sql.SQLException;
 
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.MenuButton;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import javafx.scene.Node;
@@ -52,18 +53,21 @@ public class LoginController {
 
                 if (user != null) {
                     FXUtils.showInformation("Login Success", "Welcome back to Produtem");
+                    Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
                     String fxmlPath;
                     if (user instanceof IndividualUser || user instanceof BusinessUser) {
-                        fxmlPath = "/com/example/shoppingapp/main_page.fxml";
+                        fxmlPath = "/com/example/shoppingapp/main_menu.fxml";
+                        Parent root = FXMLLoader.load(getClass().getResource(fxmlPath));
+                        stage.setScene(new Scene(root));
+                        stage.show();
+                        stage.setMaximized(true);
                     } else {
                         fxmlPath = "/com/example/shoppingapp/admin_menu.fxml";
+                        Parent root = FXMLLoader.load(getClass().getResource(fxmlPath));
+                        stage.setScene(new Scene(root));
+                        stage.show();
                     }
-
-                    Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-                    Parent root = FXMLLoader.load(getClass().getResource(fxmlPath));
-                    stage.setScene(new Scene(root));
-                    stage.show();
 
                 } else {
                     FXUtils.showError("Login Error", "Incorrect email or password");
