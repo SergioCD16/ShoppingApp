@@ -386,11 +386,12 @@ public class Database {
         try (Connection conn = Database.getConnection()) {
              conn.setAutoCommit(false);
 
-             try (PreparedStatement stmt = conn.prepareStatement("UPDATE user SET Name=?, Email=?, PhoneNumber=? WHERE UserID=?")) {
+             try (PreparedStatement stmt = conn.prepareStatement("UPDATE user SET Name=?, Email=?, PhoneNumber=?, Password=? WHERE UserID=?")) {
                 stmt.setString(1, user.getName());
                 stmt.setString(2, user.getEmail());
                 stmt.setString(3, user.getPhoneNumber());
-                stmt.setInt(4, user.getUserID());
+                stmt.setString(4, user.getPassword());
+                stmt.setInt(5, user.getUserID());
                 stmt.executeUpdate();
              }
             try (PreparedStatement stmt = conn.prepareStatement("UPDATE individualuser SET DNI=? WHERE UserID=?")) {
@@ -427,11 +428,12 @@ public class Database {
         try (Connection conn = Database.getConnection()) {
             conn.setAutoCommit(false);
 
-            try (PreparedStatement stmt = conn.prepareStatement("UPDATE user SET Name=?, Email=?, PhoneNumber=? WHERE UserID=?")) {
+            try (PreparedStatement stmt = conn.prepareStatement("UPDATE user SET Name=?, Email=?, PhoneNumber=?, Password=? WHERE UserID=?")) {
                 stmt.setString(1, user.getName());
                 stmt.setString(2, user.getEmail());
                 stmt.setString(3, user.getPhoneNumber());
-                stmt.setInt(4, user.getUserID());
+                stmt.setString(4, user.getPassword());
+                stmt.setInt(5, user.getUserID());
                 stmt.executeUpdate();
             }
             try (PreparedStatement stmt = conn.prepareStatement("UPDATE businessuser SET CIF=? WHERE UserID=?")) {

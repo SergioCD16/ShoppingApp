@@ -160,6 +160,27 @@ public class CheckRegistration {
         return true;
     }
 
+    public static boolean checkPassword(String password, String cPassword) {
+        // Check Password and Confirm Password fields
+        if (!checkBlankField(password)) {
+            FXUtils.showError("Error in password field", "Password field is blank");
+            return false;
+        }
+        if (!checkStringLength(password, 30, 8)) {
+            FXUtils.showError("Error in password field", "Incorrect length (minium 8 characters)");
+            return false;
+        }
+        if (!checkBlankField(cPassword)) {
+            FXUtils.showError("Error in confirm password field", "Confirm password field is blank");
+            return false;
+        }
+        if (!checkPasswordEquals(password, cPassword)) {
+            FXUtils.showError("Error in password field", "Confirm password field isn't equal to password field");
+            return false;
+        }
+        return true;
+    }
+
     public static boolean checkAddressRegistration(String streetName, String number, String zipCode, String city) throws SQLException, ClassNotFoundException {
         // Check Street Name
         if (!checkBlankField(streetName)) {

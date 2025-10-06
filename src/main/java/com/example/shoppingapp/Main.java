@@ -23,13 +23,12 @@ public class Main extends Application {
     }
 
     /* TODO
-    * -- limpiar codigo
-    * - hacer editar informacion usuario desde usuario
+    * - Hash password instead of String type
     *
     * - mejorar clases y .java con sql
-    * - Hash password instead of String type
     * - Change suggestions of code improvement
     *
+    * - limpiar codigo
     * - check previous program
     */
 }

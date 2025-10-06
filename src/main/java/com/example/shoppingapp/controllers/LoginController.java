@@ -57,11 +57,26 @@ public class LoginController {
 
                     String fxmlPath;
                     if (user instanceof IndividualUser || user instanceof BusinessUser) {
-                        fxmlPath = "/com/example/shoppingapp/main_menu.fxml";
-                        Parent root = FXMLLoader.load(getClass().getResource(fxmlPath));
+                        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/shoppingapp/main_menu.fxml"));
+                        Parent root = loader.load();
+                        MainMenuController controller = loader.getController();
+
+                        int userID = user.getUserID();
+                        user = Database.getUserByID(userID);
+                        Address address = Database.getAddressesByUserID(userID);
+                        CreditCard creditCard = Database.getCreditCardsByUserID(userID);
+                        if (user.getType().equals("INDIVIDUAL")) {
+                            IndividualUser indUser = Database.getIndividualUserByID(userID, user);
+                            controller.setUser(user, indUser, address, creditCard, userID);
+                        } else {
+                            BusinessUser busUser = Database.getBusinessUserByID(userID, user);
+                            controller.setUser(user, busUser, address, creditCard, userID);
+                        }
+
                         stage.setScene(new Scene(root));
                         stage.show();
                         stage.setMaximized(true);
+
                     } else {
                         fxmlPath = "/com/example/shoppingapp/admin_menu.fxml";
                         Parent root = FXMLLoader.load(getClass().getResource(fxmlPath));
