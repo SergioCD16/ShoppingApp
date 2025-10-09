@@ -326,7 +326,7 @@ public class CheckRegistration {
             FXUtils.showError("Error in description field", "Description field is blank");
             return false;
         }
-        if (!checkStringLength(description, 300, 10)) {
+        if (!checkStringLength(description, 400, 10)) {
             FXUtils.showError("Error in description field", "Incorrect length");
             return false;
         }

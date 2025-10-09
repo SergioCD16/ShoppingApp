@@ -57,7 +57,7 @@ public class LoginController {
 
                     String fxmlPath;
                     if (user instanceof IndividualUser || user instanceof BusinessUser) {
-                        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/shoppingapp/main_menu.fxml"));
+                        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/shoppingapp/main_menu_2.fxml"));
                         Parent root = loader.load();
                         MainMenuController controller = loader.getController();
 

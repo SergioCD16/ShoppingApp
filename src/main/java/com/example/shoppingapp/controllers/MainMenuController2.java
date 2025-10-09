@@ -12,6 +12,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.FlowPane;
 import javafx.stage.Stage;
 
 import java.io.ByteArrayInputStream;
@@ -20,7 +22,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
-public class MainMenuController {
+public class MainMenuController2 {
     @FXML
     SplitMenuButton accountSplitMenuButton;
     @FXML
@@ -35,6 +37,8 @@ public class MainMenuController {
     Label priceLabel1;
     @FXML
     ImageView productImage1;
+    @FXML
+    private FlowPane productContainer;
 
     private User user;
     private IndividualUser indUser;
@@ -45,10 +49,22 @@ public class MainMenuController {
     private List<Product> productslist;
 
     public void initialize() {
-        categoryChoiceBox.getItems().addAll("Components", "Computers", "Smartphones", "TV and Audio", "Consoles and Videogames", "No Category");
-        categoryChoiceBox.setValue("Select Category");
-        productslist = Database.getAllProducts();
-        setProducts();
+        List<Product> products = Database.getAllProducts();
+
+        for (Product product : products) {
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/shoppingapp/product_card.fxml"));
+                AnchorPane productCard = loader.load();
+
+                ProductCardController controller = loader.getController();
+                controller.setData(product);
+
+                productContainer.getChildren().add(productCard);
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     @FXML
