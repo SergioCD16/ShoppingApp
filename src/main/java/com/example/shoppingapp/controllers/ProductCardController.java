@@ -20,16 +20,16 @@ public class ProductCardController {
     @FXML
     private ImageView productImage;
     @FXML
-    private Label productTitle;
+    private Label titleLabel;
     @FXML
-    private Label productPrice;
+    private Label priceLabel;
 
     private Product product;
 
     public void setData(Product product) {
         this.product = product;
-        productTitle.setText(product.getTitle());
-        productPrice.setText(String.format("%.2f €", product.getPrice()));
+        titleLabel.setText(product.getTitle());
+        priceLabel.setText(String.format("%.2f €", product.getPrice()));
 
         if (product.getPicture() != null) {
             Image image = new Image(new ByteArrayInputStream(product.getPicture()));

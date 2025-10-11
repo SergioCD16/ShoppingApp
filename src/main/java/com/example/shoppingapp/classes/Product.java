@@ -59,9 +59,8 @@ public class Product {
     public int getProductID() {
         return this.ProductID;
     }
-    public String getEntryDate() {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-        return this.EntryDate.format(formatter);
+    public LocalDateTime getEntryDate() {
+        return EntryDate;
     }
 
     public void setTitle(String title) {

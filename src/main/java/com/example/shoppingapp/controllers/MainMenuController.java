@@ -12,6 +12,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.FlowPane;
 import javafx.stage.Stage;
 
 import java.io.ByteArrayInputStream;
@@ -35,6 +37,8 @@ public class MainMenuController {
     Label priceLabel1;
     @FXML
     ImageView productImage1;
+    @FXML
+    private FlowPane productContainer;
 
     private User user;
     private IndividualUser indUser;
@@ -48,7 +52,23 @@ public class MainMenuController {
         categoryChoiceBox.getItems().addAll("Components", "Computers", "Smartphones", "TV and Audio", "Consoles and Videogames", "No Category");
         categoryChoiceBox.setValue("Select Category");
         productslist = Database.getAllProducts();
-        setProducts();
+
+        List<Product> products = Database.getAllProducts();
+
+        for (int i = 0; i < products.size(); i++) {
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/shoppingapp/product_card.fxml"));
+                AnchorPane productCard = loader.load();
+
+                ProductCardController controller = loader.getController();
+                controller.setData(products.get(i));
+
+                productContainer.getChildren().add(productCard);
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     @FXML
@@ -74,6 +94,8 @@ public class MainMenuController {
         stage.setScene(new Scene(root));
         stage.show();
         stage.setMaximized(false);
+        stage.setWidth(670);
+        stage.setHeight(425);
     }
 
     @FXML
@@ -89,6 +111,8 @@ public class MainMenuController {
         stage.setScene(new Scene(root));
         stage.show();
         stage.setMaximized(false);
+        stage.setWidth(670);
+        stage.setHeight(425);
     }
 
     @FXML
