@@ -61,7 +61,7 @@ public class MainMenuController {
                 AnchorPane productCard = loader.load();
 
                 ProductCardController controller = loader.getController();
-                controller.setData(products.get(i));
+                controller.setData(products.get(i), user, indUser, busUser, address, creditCard, userID);
 
                 productContainer.getChildren().add(productCard);
 
@@ -136,18 +136,12 @@ public class MainMenuController {
         this.userID = userID;
     }
 
-    public void setProducts() {
-        Product productI;
-        for (int i = 0; i < productslist.size(); i++) {
-            productI = productslist.get(i);
-            titleLabel1.setText(productI.getTitle());
-            descriptionLabel1.setText(productI.getDescription());
-            priceLabel1.setText(String.valueOf(productI.getPrice()) + " €");
-            Image image = new Image(new ByteArrayInputStream(productI.getPicture()));
-            productImage1.setImage(image);
-            productImage1.setFitWidth(150);
-            productImage1.setFitHeight(150);
-            productImage1.setPreserveRatio(true);
-        }
+    public void setUser(User user, IndividualUser indUser, BusinessUser busUser, Address address, CreditCard creditCard, int userID) {
+        this.user = user;
+        this.indUser = indUser;
+        this.busUser = busUser;
+        this.address = address;
+        this.creditCard = creditCard;
+        this.userID = userID;
     }
 }

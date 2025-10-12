@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="425.0" prefWidth="670.0" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.shoppingapp.controllers.ProductDetailsController">
+   <children>
+      <MenuBar>
+        <menus>
+          <Menu mnemonicParsing="false" text="File">
+            <items>
+              <MenuItem mnemonicParsing="false" text="Close" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Edit">
+            <items>
+              <MenuItem mnemonicParsing="false" text="Delete" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Help">
+            <items>
+              <MenuItem mnemonicParsing="false" text="About" />
+            </items>
+          </Menu>
+        </menus>
+      </MenuBar>
+      <Pane prefHeight="425.0" prefWidth="600.0" style="-fx-background-color: #212121;">
+         <children>
+            <Button fx:id="goBackButton" layoutX="31.0" layoutY="352.0" mnemonicParsing="false" onAction="#goBack" text="Go back">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Button>
+            <Button fx:id="PurchaseButton" layoutX="569.0" layoutY="352.0" mnemonicParsing="false" onAction="#purchase" text="Purchase">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Button>
+            <ImageView fx:id="productImage" fitHeight="250.0" fitWidth="250.0" layoutX="31.0" layoutY="29.0" pickOnBounds="true" preserveRatio="true" />
+            <Label fx:id="titleLabel" layoutX="294.0" layoutY="29.0" prefHeight="46.0" prefWidth="358.0" text="Title" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Label>
+            <Label fx:id="descriptionLabel" alignment="TOP_LEFT" layoutX="294.0" layoutY="100.0" prefHeight="178.0" prefWidth="343.0" text="Description" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font>
+            </Label>
+            <Label fx:id="categoryLabel" layoutX="543.0" layoutY="307.0" text="Category" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Label>
+            <Label fx:id="priceLabel" layoutX="31.0" layoutY="292.0" prefHeight="46.0" prefWidth="110.0" text="Price" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="24.0" />
+               </font>
+            </Label>
+            <Label fx:id="stockLabel" layoutX="183.0" layoutY="292.0" prefHeight="46.0" prefWidth="140.0" text="Stock" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Label>
+            <Label fx:id="scoreLabel" layoutX="355.0" layoutY="307.0" text="Average Review Score" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Label>
+            <Button fx:id="seeReviewsButton" layoutX="459.0" layoutY="352.0" mnemonicParsing="false" onAction="#seeReviews" text="See Reviews">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Button>
+         </children>
+      </Pane>
+   </children>
+</VBox>
