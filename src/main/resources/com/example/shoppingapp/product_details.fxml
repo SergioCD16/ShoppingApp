@@ -5,6 +5,7 @@
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.Spinner?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
@@ -38,23 +39,23 @@
                   <Font name="System Bold" size="12.0" />
                </font>
             </Button>
-            <Button fx:id="PurchaseButton" layoutX="569.0" layoutY="352.0" mnemonicParsing="false" onAction="#purchase" text="Purchase">
+            <Button fx:id="PurchaseButton" layoutX="545.0" layoutY="352.0" mnemonicParsing="false" onAction="#purchase" text="Purchase">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
             </Button>
             <ImageView fx:id="productImage" fitHeight="250.0" fitWidth="250.0" layoutX="31.0" layoutY="29.0" pickOnBounds="true" preserveRatio="true" />
-            <Label fx:id="titleLabel" layoutX="294.0" layoutY="29.0" prefHeight="46.0" prefWidth="358.0" text="Title" textFill="WHITE">
+            <Label fx:id="titleLabel" alignment="TOP_LEFT" layoutX="301.0" layoutY="37.0" prefHeight="40.0" prefWidth="336.0" text="Title" textFill="WHITE" wrapText="true">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
             </Label>
-            <Label fx:id="descriptionLabel" alignment="TOP_LEFT" layoutX="294.0" layoutY="100.0" prefHeight="178.0" prefWidth="343.0" text="Description" textFill="WHITE">
+            <Label fx:id="descriptionLabel" alignment="TOP_LEFT" layoutX="301.0" layoutY="87.0" prefHeight="178.0" prefWidth="336.0" text="Description" textFill="WHITE" wrapText="true">
                <font>
                   <Font name="System Bold" size="13.0" />
                </font>
             </Label>
-            <Label fx:id="categoryLabel" layoutX="543.0" layoutY="307.0" text="Category" textFill="WHITE">
+            <Label fx:id="categoryLabel" layoutX="460.0" layoutY="307.0" text="Category" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
@@ -64,21 +65,27 @@
                   <Font name="System Bold" size="24.0" />
                </font>
             </Label>
-            <Label fx:id="stockLabel" layoutX="183.0" layoutY="292.0" prefHeight="46.0" prefWidth="140.0" text="Stock" textFill="WHITE">
+            <Label fx:id="stockLabel" layoutX="149.0" layoutY="292.0" prefHeight="46.0" prefWidth="140.0" text="Stock" textFill="WHITE">
                <font>
-                  <Font name="System Bold" size="18.0" />
+                  <Font name="System Bold" size="24.0" />
                </font>
             </Label>
-            <Label fx:id="scoreLabel" layoutX="355.0" layoutY="307.0" text="Average Review Score" textFill="WHITE">
+            <Label fx:id="scoreLabel" layoutX="307.0" layoutY="307.0" text="Av. Review Score" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
             </Label>
-            <Button fx:id="seeReviewsButton" layoutX="459.0" layoutY="352.0" mnemonicParsing="false" onAction="#seeReviews" text="See Reviews">
+            <Button fx:id="seeReviewsButton" layoutX="259.0" layoutY="352.0" mnemonicParsing="false" onAction="#seeReviews" text="See Reviews">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
             </Button>
+            <Spinner fx:id="quantitySpinner" layoutX="442.0" layoutY="352.0" prefHeight="25.0" prefWidth="85.0" />
+            <Label layoutX="382.0" layoutY="356.0" text="Quantity:" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Label>
          </children>
       </Pane>
    </children>

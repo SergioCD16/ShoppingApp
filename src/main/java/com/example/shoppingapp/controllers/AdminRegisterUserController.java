@@ -103,6 +103,7 @@ public class AdminRegisterUserController {
             }
 
             if (checkResultCreditCard) {
+                String hashPassword = User.hashPassword(passwordField.getText());
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
                 LocalDate expDate = LocalDate.parse(expirationDateField.getText(), formatter);
                 String streetName = Address.capitalizeWords(streetNameField.getText());
@@ -113,11 +114,11 @@ public class AdminRegisterUserController {
                 Address address = new Address(streetName, numberField.getText(), zipCodeField.getText(), city);
 
                 if (selectedRole.equals("Individual User")) {
-                    User user = new User(usernameField.getText(), emailField.getText(), passwordField.getText(), phoneField.getText(), "INDIVIDUAL");
+                    User user = new User(usernameField.getText(), emailField.getText(), hashPassword, phoneField.getText(), "INDIVIDUAL");
                     IndividualUser indUser = new IndividualUser(user.getName(), user.getEmail(), user.getPassword(), user.getPhoneNumber(), DNICIFField.getText(), "INDIVIDUAL");
                     Database.addIndividualUser(user, indUser, address, creditCard);
                 } else {
-                    User user = new User(usernameField.getText(), emailField.getText(), passwordField.getText(), phoneField.getText(), "BUSINESS");
+                    User user = new User(usernameField.getText(), emailField.getText(), hashPassword, phoneField.getText(), "BUSINESS");
                     BusinessUser busUser = new BusinessUser(user.getName(), user.getEmail(), user.getPassword(), user.getPhoneNumber(), DNICIFField.getText(), "BUSINESS");
                     Database.addBusinessUser(user, busUser, address, creditCard);
                 }

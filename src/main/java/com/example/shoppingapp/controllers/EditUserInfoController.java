@@ -65,70 +65,22 @@ public class EditUserInfoController {
     private int userID;
 
     @FXML
-    void goToMainMenu(ActionEvent event) throws IOException {
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/shoppingapp/main_menu.fxml"));
-        Parent root = loader.load();
-        MainMenuController controller = loader.getController();
+    public void initialize() {
+        this.user = UserStore.getInstance().getUser();
+        this.indUser = UserStore.getInstance().getIndUser();
+        this.busUser = UserStore.getInstance().getBusUser();
+        this.address = UserStore.getInstance().getAddress();
+        this.creditCard = UserStore.getInstance().getCreditCard();
+        this.userID = UserStore.getInstance().getUserID();
 
+        usernameField.setText(user.getName());
+        emailField.setText(user.getEmail());
+        phoneField.setText(user.getPhoneNumber());
         if (user.getType().equals("INDIVIDUAL")) {
-            controller.setUser(user, indUser, address, creditCard, userID);
+            DNICIFField.setText(indUser.getDNI());
         } else {
-            controller.setUser(user, busUser, address, creditCard, userID);
+            DNICIFField.setText(busUser.getCIF());
         }
-
-        stage.setTitle("Produtem");
-        stage.setScene(new Scene(root));
-        stage.show();
-        stage.setMaximized(true);
-    }
-
-    public void switchWindow(Stage stage, String fxmlFile) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource(fxmlFile));
-        stage.setTitle("Produtem");
-        stage.setScene(new Scene(root));
-        stage.show();
-        stage.setMaximized(true);
-    }
-
-    public void setUser(User user, IndividualUser indUser, Address address, CreditCard creditCard, int userID) {
-        DNICIFLabel.setText("DNI: ");
-        this.user = user;
-        this.indUser = indUser;
-        this.address = address;
-        this.creditCard = creditCard;
-        this.userID = userID;
-
-        usernameField.setText(user.getName());
-        emailField.setText(user.getEmail());
-        phoneField.setText(user.getPhoneNumber());
-        passwordField.setText(user.getPassword());
-        cPasswordField.setText(user.getPassword());
-        DNICIFField.setText(indUser.getDNI());
-        streetNameField.setText(address.getStreetName());
-        numberField.setText(address.getNumber());
-        zipCodeField.setText(address.getZipCode());
-        cityField.setText(address.getCity());
-        creditCardField.setText(creditCard.getNumber());
-        fullNameField.setText(creditCard.getName());
-        CVVField.setText(creditCard.getCVV());
-        expirationDateField.setText(LocalDate.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")));
-    }
-
-    public void setUser(User user, BusinessUser busUser, Address address, CreditCard creditCard, int userID) {
-        DNICIFLabel.setText("CIF: ");
-        this.user = user;
-        this.busUser = busUser;
-        this.address = address;
-        this.creditCard = creditCard;
-        this.userID = userID;
-
-        usernameField.setText(user.getName());
-        emailField.setText(user.getEmail());
-        phoneField.setText(user.getPhoneNumber());
-        passwordField.setText(user.getPassword());
-        cPasswordField.setText(user.getPassword());
-        DNICIFField.setText(busUser.getCIF());
         streetNameField.setText(address.getStreetName());
         numberField.setText(address.getNumber());
         zipCodeField.setText(address.getZipCode());
@@ -140,13 +92,30 @@ public class EditUserInfoController {
     }
 
     @FXML
+    void goToMainMenu(ActionEvent event) throws IOException {
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/shoppingapp/main_menu.fxml"));
+        Parent root = loader.load();
+
+        stage.setTitle("Produtem");
+        stage.setScene(new Scene(root));
+        stage.show();
+        stage.setMaximized(true);
+    }
+
+    @FXML
     private void editUser() throws IOException, SQLException, ClassNotFoundException {
         boolean indOrBus = false;
         if (user.getType().equals("INDIVIDUAL")) {
             indOrBus = true;
         }
         boolean userCheck = CheckRegistration.checkEditUser(indOrBus, usernameField.getText(), emailField.getText(), DNICIFField.getText(), phoneField.getText());
-        boolean passwordCheck = CheckRegistration.checkPassword(passwordField.getText(), cPasswordField.getText());
+
+        boolean passwordCheck = true;
+        if (!(passwordField.getText().equals("") && cPasswordField.getText().equals(""))) {
+            passwordCheck = CheckRegistration.checkPassword(passwordField.getText(), cPasswordField.getText());
+        }
+
         boolean addressCheck = CheckRegistration.checkAddressRegistration(streetNameField.getText(), numberField.getText(), zipCodeField.getText(), cityField.getText());
         boolean creditCardCheck = CheckRegistration.checkCreditCardRegistration(creditCardField.getText(), fullNameField.getText(), CVVField.getText(), expirationDateField.getText());
 
@@ -165,10 +134,11 @@ public class EditUserInfoController {
             Optional<ButtonType> result = alert.showAndWait();
 
             if (result.isPresent() && result.get() == yesButton) {
+                String hashPassword = User.hashPassword(passwordField.getText());
                 user.setName(usernameField.getText());
                 user.setEmail(emailField.getText());
                 user.setPhoneNumber(phoneField.getText());
-                user.setPassword(passwordField.getText());
+                user.setPassword(hashPassword);
                 if (user.getType().equals("INDIVIDUAL")) {
                     indUser.setDNI(DNICIFField.getText());
                 } else {
@@ -198,13 +168,6 @@ public class EditUserInfoController {
                 Stage stage = (Stage) fullNameField.getScene().getWindow();
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/shoppingapp/main_menu.fxml"));
                 Parent root = loader.load();
-                MainMenuController controller = loader.getController();
-
-                if (user.getType().equals("INDIVIDUAL")) {
-                    controller.setUser(user, indUser, address, creditCard, userID);
-                } else {
-                    controller.setUser(user, busUser, address, creditCard, userID);
-                }
 
                 stage.setTitle("Produtem");
                 stage.setScene(new Scene(root));

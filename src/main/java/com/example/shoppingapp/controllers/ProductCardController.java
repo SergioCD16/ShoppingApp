@@ -32,14 +32,17 @@ public class ProductCardController {
     private int userID;
     private Product product;
 
-    public void setData(Product product, User user, IndividualUser indUser, BusinessUser busUser, Address address, CreditCard creditCard, int userID) {
+    public void initialize() {
+        this.user = UserStore.getInstance().getUser();
+        this.indUser = UserStore.getInstance().getIndUser();
+        this.busUser = UserStore.getInstance().getBusUser();
+        this.address = UserStore.getInstance().getAddress();
+        this.creditCard = UserStore.getInstance().getCreditCard();
+        this.userID = UserStore.getInstance().getUserID();
+    }
+
+    public void setProduct(Product product) {
         this.product = product;
-        this.user = user;
-        this.indUser = indUser;
-        this.busUser = busUser;
-        this.address = address;
-        this.creditCard = creditCard;
-        this.userID = userID;
 
         titleLabel.setText(product.getTitle());
         priceLabel.setText(String.format("%.2f €", product.getPrice()));
@@ -49,23 +52,23 @@ public class ProductCardController {
             productImage.setImage(image);
         }
 
-        cardRoot.setOnMouseClicked(event -> openProductDetails());
+        cardRoot.setOnMouseClicked(event -> openProductDetails(user, indUser, busUser, address, creditCard, userID));
     }
 
-    private void openProductDetails() {
+    private void openProductDetails(User user, IndividualUser indUser, BusinessUser busUser, Address address, CreditCard creditCard, int userID) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/shoppingapp/product_details.fxml"));
             Parent root = loader.load();
 
             ProductDetailsController controller = loader.getController();
-            controller.setData(product, user, indUser, busUser, address, creditCard, userID);
+            controller.setProduct(product);
 
             Stage stage = (Stage) cardRoot.getScene().getWindow();
             stage.setScene(new Scene(root));
             stage.show();
             stage.setMaximized(false);
-            stage.setWidth(700);
-            stage.setHeight(440);
+            stage.setWidth(670);
+            stage.setHeight(460);
 
         } catch (IOException e) {
             e.printStackTrace();

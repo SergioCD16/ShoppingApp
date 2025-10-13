@@ -1,5 +1,7 @@
 package com.example.shoppingapp.classes;
 
+import org.mindrot.jbcrypt.BCrypt;
+
 public class User {
     private String Name;
     private String Email;
@@ -67,5 +69,13 @@ public class User {
     public String toString() {
         return "Name :" + this.Name + ", Email: " + this.Email + ", Password: " + this.Password +
                 ", Phone Number: " + this.PhoneNumber + ", UserID: " + this.UserID;
+    }
+
+    public static String hashPassword(String password) {
+        return BCrypt.hashpw(password, BCrypt.gensalt(12));
+    }
+
+    public static boolean checkPassword(String plainPassword, String hashedPassword) {
+        return BCrypt.checkpw(plainPassword, hashedPassword);
     }
 }

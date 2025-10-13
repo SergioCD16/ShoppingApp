@@ -2,6 +2,7 @@ package com.example.shoppingapp.controllers;
 
 import com.example.shoppingapp.classes.Product;
 import com.example.shoppingapp.classes.Review;
+import com.example.shoppingapp.utils.FXUtils;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -32,6 +33,8 @@ public class ProductDetailsController {
     private Label reviewsLabel;
     @FXML
     private Label categoryLabel;
+    @FXML
+    private Spinner<Integer> quantitySpinner;
 
     private Product product;
     private List<Review> reviews;
@@ -44,12 +47,23 @@ public class ProductDetailsController {
     private int userID;
 
     @FXML
+    public void initialize() {
+        SpinnerValueFactory<Integer> valueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 100, 1);
+        quantitySpinner.setValueFactory(valueFactory);
+        quantitySpinner.setEditable(false);
+
+        this.user = UserStore.getInstance().getUser();
+        this.indUser = UserStore.getInstance().getIndUser();
+        this.busUser = UserStore.getInstance().getBusUser();
+        this.address = UserStore.getInstance().getAddress();
+        this.creditCard = UserStore.getInstance().getCreditCard();
+        this.userID = UserStore.getInstance().getUserID();
+    }
+
+    @FXML
     public void goBack(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/shoppingapp/main_menu.fxml"));
         Parent root = loader.load();
-
-        MainMenuController controller = loader.getController();
-        controller.setUser(user, indUser, busUser, address, creditCard, userID);
 
         Stage stage = (Stage) titleLabel.getScene().getWindow();
         stage.setScene(new Scene(root));
@@ -62,23 +76,19 @@ public class ProductDetailsController {
 
     }
 
-    @FXML
-    public void purchase(ActionEvent event) throws IOException {
-
+    @FXML public void purchase(ActionEvent event) throws IOException {
+        int quantity = quantitySpinner.getValue();
+        if (quantity > product.getStock()) {
+            FXUtils.showError("Error in quantity chosen", "Choose a quantity smaller or equal to the current stock");
+        }
     }
 
-    public void setData(Product product, User user, IndividualUser indUser, BusinessUser busUser, Address address, CreditCard creditCard, int userID) {
+    public void setProduct(Product product) {
         this.product = product;
-        this.user = user;
-        this.indUser = indUser;
-        this.busUser = busUser;
-        this.address = address;
-        this.creditCard = creditCard;
-        this.userID = userID;
 
         titleLabel.setText(product.getTitle());
         descriptionLabel.setText(product.getDescription());
-        priceLabel.setText(String.valueOf(product.getPrice()) + " €");
+        priceLabel.setText(String.valueOf(product.getPrice()) + "€");
         stockLabel.setText("Stock: " + String.valueOf(product.getStock()));
         categoryLabel.setText(product.getCategory());
 

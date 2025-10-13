@@ -14,7 +14,6 @@ import java.sql.SQLException;
 
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.MenuButton;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import javafx.scene.Node;
@@ -59,7 +58,6 @@ public class LoginController {
                     if (user instanceof IndividualUser || user instanceof BusinessUser) {
                         FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/shoppingapp/main_menu.fxml"));
                         Parent root = loader.load();
-                        MainMenuController controller = loader.getController();
 
                         int userID = user.getUserID();
                         user = Database.getUserByID(userID);
@@ -67,10 +65,10 @@ public class LoginController {
                         CreditCard creditCard = Database.getCreditCardsByUserID(userID);
                         if (user.getType().equals("INDIVIDUAL")) {
                             IndividualUser indUser = Database.getIndividualUserByID(userID, user);
-                            controller.setUser(user, indUser, address, creditCard, userID);
+                            UserStore.getInstance().setUser(user, indUser, address, creditCard, userID);
                         } else {
                             BusinessUser busUser = Database.getBusinessUserByID(userID, user);
-                            controller.setUser(user, busUser, address, creditCard, userID);
+                            UserStore.getInstance().setUser(user, busUser, address, creditCard, userID);
                         }
 
                         stage.setScene(new Scene(root));
@@ -91,48 +89,51 @@ public class LoginController {
         }
     }
 
-    public User login(String email, String password) {
+    public User login(String email, String plainPassword) {
         try {
             String sql = "SELECT u.UserID, u.Name, u.Email, u.Password, u.PhoneNumber, u.Type, " +
                     "i.DNI, b.CIF " + "FROM User u " + "LEFT JOIN IndividualUser i ON u.UserID = i.UserID " +
-                    "LEFT JOIN BusinessUser b ON u.UserID = b.UserID " + "WHERE u.Email=? AND u.Password=?";
+                    "LEFT JOIN BusinessUser b ON u.UserID = b.UserID " + "WHERE u.Email=?";
 
             try (Connection conn = Database.getConnection();
                  PreparedStatement stmt = conn.prepareStatement(sql)) {
                 stmt.setString(1, email);
-                stmt.setString(2, password);
 
                 try (ResultSet rs = stmt.executeQuery()) {
+
                     if (rs.next()) {
                         String type = rs.getString("Type");
+                        boolean checkPassword = User.checkPassword(plainPassword, rs.getString("Password"));
 
-                        if (type.equals("ADMIN")) {
-                            return new User(
-                                    rs.getString("Name"),
-                                    rs.getString("Email"),
-                                    rs.getString("Password"),
-                                    rs.getString("PhoneNumber"),
-                                    rs.getString("Type"),
-                                    rs.getInt("UserID")
-                            );
-                        } else if (type.equals("INDIVIDUAL")) {
-                            return new IndividualUser(
-                                    rs.getString("Name"),
-                                    rs.getString("Email"),
-                                    rs.getString("Password"),
-                                    rs.getString("PhoneNumber"),
-                                    rs.getInt("UserID"),
-                                    rs.getString("DNI"),
-                                    rs.getString("Type"));
-                        } else {
-                            return new BusinessUser(
-                                    rs.getString("Name"),
-                                    rs.getString("Email"),
-                                    rs.getString("Password"),
-                                    rs.getString("PhoneNumber"),
-                                    rs.getInt("UserID"),
-                                    rs.getString("CIF"),
-                                    rs.getString("Type"));
+                        if (checkPassword){
+                            if (type.equals("ADMIN")) {
+                                return new User(
+                                        rs.getString("Name"),
+                                        rs.getString("Email"),
+                                        rs.getString("Password"),
+                                        rs.getString("PhoneNumber"),
+                                        rs.getString("Type"),
+                                        rs.getInt("UserID")
+                                );
+                            } else if (type.equals("INDIVIDUAL")) {
+                                return new IndividualUser(
+                                        rs.getString("Name"),
+                                        rs.getString("Email"),
+                                        rs.getString("Password"),
+                                        rs.getString("PhoneNumber"),
+                                        rs.getInt("UserID"),
+                                        rs.getString("DNI"),
+                                        rs.getString("Type"));
+                            } else {
+                                return new BusinessUser(
+                                        rs.getString("Name"),
+                                        rs.getString("Email"),
+                                        rs.getString("Password"),
+                                        rs.getString("PhoneNumber"),
+                                        rs.getInt("UserID"),
+                                        rs.getString("CIF"),
+                                        rs.getString("Type"));
+                            }
                         }
                     }
                 }
@@ -140,6 +141,7 @@ public class LoginController {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
         return null;
     }
 }

@@ -1,5 +1,6 @@
 package com.example.shoppingapp;
 
+import com.example.shoppingapp.classes.User;
 import javafx.application.Application;
 import javafx.scene.image.Image;
 import javafx.fxml.FXMLLoader;
@@ -9,6 +10,7 @@ import java.sql.SQLException;
 
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import org.mindrot.jbcrypt.BCrypt;
 
 public class Main extends Application {
 
@@ -23,8 +25,6 @@ public class Main extends Application {
     }
 
     /* TODO
-    * - Hash password instead of String type
-    *
     * - mejorar clases y .java con sql
     * - Change suggestions of code improvement
     *
