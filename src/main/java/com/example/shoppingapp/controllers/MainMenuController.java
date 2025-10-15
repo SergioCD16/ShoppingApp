@@ -95,6 +95,13 @@ public class MainMenuController {
 
     @FXML
     void goToBasket(ActionEvent event) throws IOException {
-
+        Stage stage = (Stage) accountSplitMenuButton.getScene().getWindow();
+        Parent root = FXMLLoader.load(getClass().getResource("/com/example/shoppingapp/user_basket.fxml"));
+        stage.setTitle("Produtem");
+        stage.setScene(new Scene(root));
+        stage.show();
+        stage.setMaximized(false);
+        stage.setWidth(670);
+        stage.setHeight(425);
     }
 }

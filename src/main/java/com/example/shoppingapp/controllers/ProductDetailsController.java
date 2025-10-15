@@ -2,6 +2,7 @@ package com.example.shoppingapp.controllers;
 
 import com.example.shoppingapp.classes.Product;
 import com.example.shoppingapp.classes.Review;
+import com.example.shoppingapp.utils.Database;
 import com.example.shoppingapp.utils.FXUtils;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -80,6 +81,19 @@ public class ProductDetailsController {
         int quantity = quantitySpinner.getValue();
         if (quantity > product.getStock()) {
             FXUtils.showError("Error in quantity chosen", "Choose a quantity smaller or equal to the current stock");
+        } else {
+            PurchaseOrder purchaseOrder = Database.getPurchaseOrderByUserID(userID);
+            if (purchaseOrder == null) {
+                purchaseOrder = new PurchaseOrder(userID);
+                Database.addPurchaseOrder(purchaseOrder);
+            }
+            purchaseOrder = Database.getPurchaseOrderByUserID(userID);
+            int orderID = purchaseOrder.getOrderID();
+
+            ItemOrder itemOrder = new ItemOrder(product.getProductID(), quantity, orderID);
+            Database.addItemOrder(itemOrder);
+
+            FXUtils.showInformation("Product added successfully", "The product has been added to your basket");
         }
     }
 

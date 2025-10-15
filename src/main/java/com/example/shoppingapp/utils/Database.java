@@ -197,6 +197,48 @@ public class Database {
         }
     }
 
+    public static void addPurchaseOrder(PurchaseOrder purchaseOrder) {
+        String sql = "INSERT INTO PurchaseOrder (UserID, PurchaseDone, PurchaseDate) " + "VALUES (?, ?, ?)";
+
+        try (Connection conn = Database.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+
+            stmt.setInt(1, purchaseOrder.getUserID());
+
+            boolean purDone = purchaseOrder.getPurchaseDone();
+            int purchaseDone = 0;
+            if (purDone) {
+                purchaseDone = 1;
+            }
+            stmt.setInt(2, purchaseDone);
+            stmt.setTimestamp(3, java.sql.Timestamp.valueOf(purchaseOrder.getPurchaseDate()));
+
+            stmt.executeUpdate();
+        }
+
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void addItemOrder(ItemOrder itemOrder) {
+        String sql = "INSERT INTO ItemOrder (OrderID, ProductID, Quantity) " + "VALUES (?, ?, ?)";
+
+        try (Connection conn = Database.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+
+            stmt.setInt(1, itemOrder.getOrderID());
+            stmt.setInt(2, itemOrder.getProductID());
+            stmt.setInt(3, itemOrder.getQuantity());
+
+            stmt.executeUpdate();
+        }
+
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     public static List<User> getAllUsers() {
         List<User> users = new ArrayList<>();
         String sql = "SELECT UserID, Name, Email, PhoneNumber, Type FROM user";
@@ -375,6 +417,60 @@ public class Database {
                             entryDate
                     );
                 }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public static PurchaseOrder getPurchaseOrderByUserID(int userID) {
+        try (Connection conn = Database.getConnection()) {
+            String sql = "SELECT * FROM PurchaseOrder WHERE UserID = ?";
+            try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+                stmt.setInt(1, userID);
+                ResultSet rs = stmt.executeQuery();
+
+                if (rs.next()) {
+                    int purDone = rs.getInt("PurchaseDone");
+                    if (purDone == 0) {
+                        Date sqlDate = rs.getDate("PurchaseDate");
+                        LocalDateTime entryDate = sqlDate.toLocalDate().atStartOfDay();
+
+                        return new PurchaseOrder(
+                                rs.getInt("OrderID"),
+                                rs.getInt("UserID"),
+                                false,
+                                entryDate
+                        );
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public static List<ItemOrder> getAllItemOrderByOrderID(int orderID) {
+        try (Connection conn = Database.getConnection()) {
+            String sql = "SELECT * FROM ItemOrder WHERE OrderID = ?";
+            try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+                stmt.setInt(1, orderID);
+                ResultSet rs = stmt.executeQuery();
+
+                List<ItemOrder> itemOrders = new ArrayList<>();
+                while (rs.next()) {
+                     ItemOrder itemOrderI = new ItemOrder(
+                            rs.getInt("ProductID"),
+                            rs.getInt("Quantity"),
+                            rs.getInt("ItemID"),
+                            rs.getInt("OrderID")
+                    );
+                     itemOrders.add(itemOrderI);
+                }
+                return itemOrders;
+
             }
         } catch (SQLException e) {
             e.printStackTrace();

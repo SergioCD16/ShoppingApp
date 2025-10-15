@@ -4,14 +4,23 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class PurchaseOrder {
+    private int OrderID;
     private int UserID;
     private boolean PurchaseDone;
     private LocalDateTime PurchaseDate;
 
     public PurchaseOrder(int userID) {
+        this.OrderID = 0;
         this.UserID = userID;
         this.PurchaseDone = false;
-        this.PurchaseDate = null;
+        this.PurchaseDate = LocalDateTime.now();
+    }
+
+    public PurchaseOrder(int orderID, int userID, boolean purchaseDone, LocalDateTime purchaseDate) {
+        this.OrderID = orderID;
+        this.UserID = userID;
+        this.PurchaseDone = purchaseDone;
+        this.PurchaseDate = purchaseDate;
     }
 
     public int getUserID() {
@@ -20,6 +29,7 @@ public class PurchaseOrder {
     public boolean getPurchaseDone() {
         return this.PurchaseDone;
     }
+    public int getOrderID() {return this.OrderID;}
     public LocalDateTime getPurchaseDate() {
         return this.PurchaseDate;
     }
