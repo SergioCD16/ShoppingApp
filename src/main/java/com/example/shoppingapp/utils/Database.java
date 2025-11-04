@@ -396,11 +396,11 @@ public class Database {
         return null;
     }
 
-    public static Product getProductByID(int userID) {
+    public static Product getProductByID(int productID) {
         try (Connection conn = Database.getConnection()) {
             String sql = "SELECT * FROM Product WHERE ProductID = ?";
             try (PreparedStatement stmt = conn.prepareStatement(sql)) {
-                stmt.setInt(1, userID);
+                stmt.setInt(1, productID);
                 ResultSet rs = stmt.executeQuery();
                 if (rs.next()) {
                     Date sqlDate = rs.getDate("EntryDate");
@@ -426,24 +426,21 @@ public class Database {
 
     public static PurchaseOrder getPurchaseOrderByUserID(int userID) {
         try (Connection conn = Database.getConnection()) {
-            String sql = "SELECT * FROM PurchaseOrder WHERE UserID = ?";
+            String sql = "SELECT * FROM PurchaseOrder WHERE UserID = ? AND PurchaseDone = 0 LIMIT 1";
             try (PreparedStatement stmt = conn.prepareStatement(sql)) {
                 stmt.setInt(1, userID);
                 ResultSet rs = stmt.executeQuery();
 
                 if (rs.next()) {
-                    int purDone = rs.getInt("PurchaseDone");
-                    if (purDone == 0) {
-                        Date sqlDate = rs.getDate("PurchaseDate");
-                        LocalDateTime entryDate = sqlDate.toLocalDate().atStartOfDay();
+                    Date sqlDate = rs.getDate("PurchaseDate");
+                    LocalDateTime entryDate = sqlDate.toLocalDate().atStartOfDay();
 
-                        return new PurchaseOrder(
-                                rs.getInt("OrderID"),
-                                rs.getInt("UserID"),
-                                false,
-                                entryDate
-                        );
-                    }
+                    return new PurchaseOrder(
+                            rs.getInt("OrderID"),
+                            rs.getInt("UserID"),
+                            false,
+                            entryDate
+                    );
                 }
             }
         } catch (SQLException e) {
@@ -464,8 +461,8 @@ public class Database {
                      ItemOrder itemOrderI = new ItemOrder(
                             rs.getInt("ProductID"),
                             rs.getInt("Quantity"),
-                            rs.getInt("ItemID"),
-                            rs.getInt("OrderID")
+                            rs.getInt("OrderID"),
+                            rs.getInt("ItemID")
                     );
                      itemOrders.add(itemOrderI);
                 }
@@ -574,6 +571,38 @@ public class Database {
                 stmt.setString(5, product.getCategory());
                 stmt.setBytes(6, product.getPicture());
                 stmt.setInt(7, product.getProductID());
+                stmt.executeUpdate();
+            }
+            conn.commit();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void updatePurchaseOrder(int purchaseOrderID) {
+        try (Connection conn = Database.getConnection()) {
+            conn.setAutoCommit(false);
+
+            try (PreparedStatement stmt = conn.prepareStatement("UPDATE purchaseorder SET PurchaseDone=? WHERE OrderID=?")) {
+                stmt.setInt(1, 1);
+                stmt.setInt(2, purchaseOrderID);
+                stmt.executeUpdate();
+            }
+            conn.commit();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void updateItemOrder(ItemOrder itemOrder) {
+        try (Connection conn = Database.getConnection()) {
+            conn.setAutoCommit(false);
+
+            try (PreparedStatement stmt = conn.prepareStatement("UPDATE itemorder SET Quantity=? WHERE ItemID=?")) {
+                stmt.setInt(1, itemOrder.getQuantity());
+                stmt.setInt(2, itemOrder.getItemID());
                 stmt.executeUpdate();
             }
             conn.commit();

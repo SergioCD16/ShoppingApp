@@ -2,6 +2,7 @@ package com.example.shoppingapp.utils;
 
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Alert;
+import javafx.scene.layout.Region;
 
 public class FXUtils {
 
@@ -10,6 +11,10 @@ public class FXUtils {
         alert.setTitle("Error");
         alert.setHeaderText(header);
         alert.setContentText(message);
+
+        alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
+        alert.setResizable(true);
+
         alert.showAndWait();
     }
 
@@ -18,6 +23,10 @@ public class FXUtils {
         alert.setTitle("Warning");
         alert.setHeaderText(header);
         alert.setContentText(message);
+
+        alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
+        alert.setResizable(true);
+
         alert.showAndWait();
     }
 
@@ -26,6 +35,10 @@ public class FXUtils {
         alert.setTitle("Information");
         alert.setHeaderText(header);
         alert.setContentText(message);
+
+        alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
+        alert.setResizable(true);
+
         alert.showAndWait();
     }
 }

@@ -86,8 +86,8 @@ public class ProductDetailsController {
             if (purchaseOrder == null) {
                 purchaseOrder = new PurchaseOrder(userID);
                 Database.addPurchaseOrder(purchaseOrder);
+                purchaseOrder = Database.getPurchaseOrderByUserID(userID);
             }
-            purchaseOrder = Database.getPurchaseOrderByUserID(userID);
             int orderID = purchaseOrder.getOrderID();
 
             ItemOrder itemOrder = new ItemOrder(product.getProductID(), quantity, orderID);
